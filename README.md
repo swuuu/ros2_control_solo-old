@@ -6,7 +6,7 @@ In addition to ROS2, you will need (assuming you are using Galactic):
 - `sudo apt install ros-galactic-gazebo-ros`
 
 ### Usage
-In your workspace folder:
+First, add the package "ros2\_solo\_12" in the src folder of your workspace. Then, in your workspace folder:
 1. `colcon build` (if you have not built it yet)
 2. `source /opt/ros/galactic/setup.bash`
 3. `source install/local_setup.bash`
