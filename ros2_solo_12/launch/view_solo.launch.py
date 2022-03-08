@@ -2,14 +2,17 @@ import os
 from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-from launch.actions import DeclareLaunchArgument, ExecuteProcess
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, ExecuteProcess, IncludeLaunchDescription, \
+    RegisterEventHandler
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
+from launch.event_handlers import OnProcessExit
 
 
 def generate_launch_description():
     # ----------------------- constants for paths -----------------------
     package_name = 'ros2_solo_12'
     urdf_file_path = 'urdf/solo12.urdf.xacro'
+    config_file = 'controllers.yaml'
     rviz_config_file_path = 'rviz/rrbot.rviz'
 
     # set the path to different files and folders
@@ -39,7 +42,52 @@ def generate_launch_description():
         default_value='',
         description='The world path, by default is empty.world')
 
+    declare_controllers_cmd = DeclareLaunchArgument(
+        name='controllers_file',
+        default_value=config_file,
+        description='YAML file with the controllers configuration')
+
+    controllers_file = LaunchConfiguration("controllers_file")
     # ----------------------- Nodes -----------------------
+
+    robot_description = {
+        'robot_description': Command([PathJoinSubstitution([FindExecutable(name="xacro")]), " ", urdf_model])}
+
+    # robot_controllers = PathJoinSubstitution(
+    #     [
+    #         FindPackageShare(package=package_name),
+    #         "config",
+    #         controllers_file,
+    #     ]
+    # )
+
+    # Controller manager
+    # control_node = Node(
+    #     package="controller_manager",
+    #     executable="ros2_control_node",
+    #     parameters=[robot_description, robot_controllers],
+    #     output={
+    #         "stdout": "screen",
+    #         "stderr": "screen",
+    #     }
+    # )
+
+    load_joint_state_controller = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+             'joint_state_broadcaster'],
+        output='screen'
+    )
+
+    load_joint_trajectory_controller = ExecuteProcess(
+        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start', 'effort_controllers'],
+        output='screen'
+    )
+
+    joint_state_broadcaster_spawner = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster", "--controller-manager", "/controller_manager"],
+    )
 
     # Publish the joint states of the robot
     joint_state_publisher_node = Node(
@@ -52,8 +100,7 @@ def generate_launch_description():
         package="robot_state_publisher",
         executable="robot_state_publisher",
         output="both",
-        parameters=[
-            {'robot_description': Command([PathJoinSubstitution([FindExecutable(name="xacro")]), " ", urdf_model])}],
+        parameters=[robot_description],
     )
 
     # ----------------------- Launch Gazebo -----------------------
@@ -94,13 +141,35 @@ def generate_launch_description():
         arguments=["-d", rviz_config_file],
     )
 
+    # -----------------------------------------------------------
+
     # Create the launch description and populate
-    ld = LaunchDescription()
+    ld = LaunchDescription([
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=spawn_robot,
+                on_exit=[load_joint_state_controller],
+            )
+        ),
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=load_joint_state_controller,
+                on_exit=[load_joint_trajectory_controller],
+            )
+        ),
+    ])
+
     ld.add_action(declare_rviz_config_file_cmd)
     ld.add_action(declare_urdf_model_path_cmd)
     ld.add_action(declare_world_path_cmd)
+    ld.add_action(declare_controllers_cmd)
+
+    # ld.add_action(control_node)
     ld.add_action(joint_state_publisher_node)
     ld.add_action(robot_state_publisher_node)
+
+    # ld.add_action(joint_state_broadcaster_spawner)
+
     ld.add_action(gzclient)
     ld.add_action(gzserver)
     # ld.add_action(rviz_node)
