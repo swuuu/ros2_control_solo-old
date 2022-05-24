@@ -1,0 +1,69 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+
+    joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+     
+    effort_controllers:
+      type: effort_controllers/JointGroupEffortController
+
+    forward_position_controller:
+      type: forward_command_controller/ForwardCommandController
+
+
+joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - FL_HAA
+      - FR_HAA
+      - HL_HAA
+      - HR_HAA
+      - FL_KFE
+      - FR_KFE
+      - HL_KFE
+      - HR_KFE
+      - FL_HFE
+      - FR_HFE
+      - HL_HFE
+      - HR_HFE
+    origin: [0.0, 0.0, 1.0]
+
+    interface_name: position
+
+effort_controllers:
+  ros__parameters:
+    joints:
+      - FL_HAA
+      - FL_HFE
+      - FL_KFE
+      - FR_HAA
+      - FR_HFE
+      - FR_KFE
+      - HL_HAA
+      - HL_HFE
+      - HL_KFE
+      - HR_HAA
+      - HR_HFE
+      - HR_KFE
+
+forward_position_controller:
+  ros__parameters:
+    joints:
+      - FL_HAA
+      - FL_HFE
+      - FL_KFE
+      - FR_HAA
+      - FR_HFE
+      - FR_KFE
+      - HL_HAA
+      - HL_HFE
+      - HL_KFE
+      - HR_HAA
+      - HR_HFE
+      - HR_KFE
+
+    interface_name: position
