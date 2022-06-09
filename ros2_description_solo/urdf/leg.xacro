@@ -199,7 +199,7 @@
                     </xacro:if>
                 </xacro:unless>
                 <!-- pybullet simulation parameters -->
-                <dynamics damping="0.0" friction="0.01"/>
+<!--                <dynamics damping="0.0" friction="0.01"/>-->
             </joint>
         </xacro:unless>
 
@@ -256,10 +256,10 @@
                 </material>
             </collision>
             <!-- Bullet specific paramters -->
-            <contact>
-                <lateral_friction value="1.0"/>
-                <restitution value="0.5"/>
-            </contact>
+<!--            <contact>-->
+<!--                <lateral_friction value="1.0"/>-->
+<!--                <restitution value="0.5"/>-->
+<!--            </contact>-->
         </link> <!-- END UPPER LEG LINK -->
 
         <!-- KFE Joint between the upper leg and the lower leg -->
@@ -287,7 +287,7 @@
                 </xacro:if>
             </xacro:unless>
             <!-- pybullet simulation parameters -->
-            <dynamics damping="0.0" friction="0.0"/>
+<!--            <dynamics damping="0.0" friction="0.0"/>-->
         </joint>
 
         <link name="${prefix}_LOWER_LEG">
@@ -343,10 +343,10 @@
                 </material>
             </collision>
             <!-- Bullet specific paramters -->
-            <contact>
-                <lateral_friction value="1.0"/>
-                <restitution value="0.5"/>
-            </contact>
+<!--            <contact>-->
+<!--                <lateral_friction value="1.0"/>-->
+<!--                <restitution value="0.5"/>-->
+<!--            </contact>-->
         </link> <!-- END LOWER LEG LINK -->
 
         <!-- KFE Joint between the upper leg and the lower leg -->
@@ -396,37 +396,58 @@
                 <material name="${color_name}">
                     <color rgba="${color} ${opacity}"/>
                 </material>
+
+<!--                <surface>-->
+<!--                    <friction>-->
+<!--                        <ode>-->
+<!--                            <mu>0.7</mu>-->
+<!--                            <mu2>0.7</mu2>-->
+<!--                        </ode>-->
+<!--                    </friction>-->
+<!--                </surface>-->
+
             </collision>
             <!-- Bullet specific paramters -->
-            <contact>
-                <lateral_friction value="1.0"/>
-                <restitution value="0.5"/>
-            </contact>
+<!--            <contact>-->
+<!--                <lateral_friction value="1.0"/>-->
+<!--                <restitution value="0.5"/>-->
+<!--            </contact>-->
         </link> <!-- END LOWER LEG LINK -->
+
+<!--        <transmission name="${prefix}_HAA_transmission">-->
+<!--            <type>transmission_interface/SimpleTransmission</type>-->
+<!--            <joint name="foo_joint">-->
+<!--                <hardwareInterface>EffortJointInterface</hardwareInterface>-->
+<!--            </joint>-->
+<!--            <actuator name="foo_motor">-->
+<!--                <mechanicalReduction>50</mechanicalReduction>-->
+<!--                <hardwareInterface>EffortJointInterface</hardwareInterface>-->
+<!--            </actuator>-->
+<!--        </transmission>-->
 
         <!-- Gazebo Parameters -->
         <gazebo reference="${prefix}_SHOULDER">
             <material>Gazebo/White</material>
 <!--            <selfCollide>true</selfCollide>-->
-            <gravity>true</gravity>
+<!--            <gravity>true</gravity>-->
         </gazebo>
 
         <gazebo reference="${prefix}_UPPER_LEG">
             <material>Gazebo/White</material>
 <!--            <selfCollide>true</selfCollide>-->
-            <gravity>true</gravity>
+<!--            <gravity>true</gravity>-->
         </gazebo>
 
         <gazebo reference="${prefix}_LOWER_LEG">
             <material>Gazebo/White</material>
 <!--            <selfCollide>true</selfCollide>-->
-            <gravity>true</gravity>
+<!--            <gravity>true</gravity>-->
         </gazebo>
 
         <gazebo reference="${prefix}_FOOT">
             <material>Gazebo/White</material>
 <!--            <selfCollide>true</selfCollide>-->
-            <gravity>true</gravity>
+<!--            <gravity>true</gravity>-->
         </gazebo>
 
     </xacro:macro>

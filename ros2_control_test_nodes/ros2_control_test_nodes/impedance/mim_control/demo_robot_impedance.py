@@ -13,17 +13,21 @@ class Demo:
         robot = Solo12Robot()
 
         # Impedance controller gains
-        # kp = robot.nb_ee * [200, 200, 200]
-        kp = robot.nb_ee * [200.0, 200.0, 200.0]
-        # kp = robot.nb_ee * [20.0, 20.0, 20.0]
+        kp = robot.nb_ee * [200, 200, 200]
+        # kp = robot.nb_ee * [125.0, 125.0, 125.0] # tuned with the crane
         kd = robot.nb_ee * [10.0, 10.0, 10.0]
+        # kd = robot.nb_ee * [3.0, 3.0, 3.0] # tuned with the crane
+        # kp = robot.nb_ee * [45.0, 45.0, 45.0]
+        # kd = robot.nb_ee * [1.0, 1.0, 1.0]
 
         # Desired leg length.
         x_des = robot.nb_ee * [0.0, 0.0, -0.25]
         xd_des = robot.nb_ee * [0.0, 0.0, 0.0]
 
         # distributing forces to the active end-effectors
+        # f = robot.nb_ee * [0.0, 0.0, (robot_config.mass * 9.8) / 4]
         f = robot.nb_ee * [0.0, 0.0, (robot_config.mass * 9.8) / 4]
+        # f = robot.nb_ee * [0.0, 0.0, 0.0]
 
         config_file = robot_config.ctrl_path
         robot_leg_ctrl = RobotImpedanceController(robot, config_file)

@@ -1,10 +1,13 @@
 test_effort_controller:
   ros__parameters:
 
-    wait_sec_between_publish: 0.01
+    wait_sec_between_publish: 0.005
 
-    config_desired: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-
+    # config_desired: [0.0, 0.25, -0.5, 0.0, 0.25, -0.5, 0.0, -0.25, 0.5, 0.0, -0.25, 0.5]
+    # config_desired: [0.0, 1.0, -2.0, 0.0, 1.0, -2.0, 0.0, -1.0, 2.0, 0.0, -1.0, 2.0]
+    # config_desired: [-0.0056, 0.366, -0.7, -0.012, 0.33, -0.65, 0.013, -0.33, 0.67, 0.0084, -0.35, 0.65]
+    # config_desired: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    config_desired: [0.0, 0.8, -1.6, 0.0, 0.8, -1.6, 0.0, -0.8, 1.6, 0.0, -0.8, 1.6]
     joints:
       - FL_HAA
       - FR_HAA
@@ -19,5 +22,6 @@ test_effort_controller:
       - HL_HFE
       - HR_HFE
 
-    path_to_urdf_file: "/home/stanley/Documents/McGill/robotics/ros2_control_solo/ros2_description_solo/urdf/solo12_simulation.urdf"
-    path_to_meshes: "/home/stanley/Documents/McGill/robotics/ros2_control_solo/ros2_description_solo"
+    # path_to_urdf_file: "/home/stanley/Documents/McGill/robotics/solo12/ros2_description_solo/urdf/solo12_simulation.urdf"
+    path_to_urdf_file: "/home/stanley/Documents/McGill/robotics/solo12/ros2_description_solo/urdf/solo12.urdf"
+    path_to_meshes: "/home/stanley/Documents/McGill/robotics/solo12/ros2_description_solo"

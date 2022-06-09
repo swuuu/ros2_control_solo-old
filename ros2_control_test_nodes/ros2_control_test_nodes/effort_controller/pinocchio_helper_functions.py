@@ -14,8 +14,8 @@ class PinocchioHelperFunctions:
         q_list = np.array(list(q))
         pin.forwardKinematics(self.model, self.data, q_list)
         curr_foot = 0
-        for i in range(20):
-            print(self.model.names[i])
+        # for i in range(20):
+        #     print(self.model.names[i])
         print(self.model.names)
         print(self.data.oMi)
         for i, (name, oMi) in enumerate(zip(self.model.names, self.data.oMi)):

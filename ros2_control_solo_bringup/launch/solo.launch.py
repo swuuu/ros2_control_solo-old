@@ -14,11 +14,13 @@
 
 from inspect import Parameter
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
+from launch.actions import DeclareLaunchArgument, RegisterEventHandler
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution, EnvironmentVariable
 
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+
+from launch.event_handlers import OnProcessExit
 
 
 def generate_launch_description():        
@@ -211,12 +213,41 @@ def generate_launch_description():
         arguments=[robot_controller, "-c", "/controller_manager"],
     )
 
+    # nodes = [
+    #     control_node,
+    #     robot_state_pub_node,
+    #     joint_state_broadcaster_spawner,
+    #     robot_controller_spawner,
+    #     rviz_node,
+    # ]
+
     nodes = [
         control_node,
         robot_state_pub_node,
         joint_state_broadcaster_spawner,
         robot_controller_spawner,
         rviz_node,
+        RegisterEventHandler(
+            event_handler=OnProcessExit(
+                target_action=rviz_node,
+                on_exit=[robot_state_pub_node],
+            )
+        )
     ]
 
-    return LaunchDescription(declared_arguments + nodes)
+    # RegisterEventHandler(
+    #     event_handler=OnProcessExit(
+    #         target_action=rviz_node,
+    #         on_exit=[robot_state_pub_node],
+    #     )
+    # )
+
+    ld = LaunchDescription(declared_arguments)
+    ld.add_action(control_node)
+    ld.add_action(robot_state_pub_node)
+    ld.add_action(joint_state_broadcaster_spawner)
+    ld.add_action(robot_controller_spawner)
+    ld.add_action(rviz_node)
+
+    # return LaunchDescription(declared_arguments + nodes)
+    return ld

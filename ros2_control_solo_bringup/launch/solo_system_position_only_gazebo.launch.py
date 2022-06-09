@@ -8,6 +8,8 @@ from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
+    sdf_solo_path = PathJoinSubstitution([FindPackageShare("ros2_description_solo"), "urdf", "solo12_simulation.sdf"])
+
     declare_use_sim_time = (DeclareLaunchArgument(name='use_sim_time', default_value='True',
                                                   description='Flag to enable use_sim'))
 
@@ -48,6 +50,14 @@ def generate_launch_description():
         arguments=["-topic", "robot_description", "-entity", "solo", "-x 0", "-y 0", "-z 0.5"],
         output="screen",
     )
+
+    # spawn_entity = Node(
+    #     package="gazebo_ros",
+    #     executable="spawn_entity.py",
+    #     arguments=["-entity", "solo", "-file", sdf_solo_path, "-x 0", "-y 0", "-z 0.5"],
+    #     output="screen",
+    # )
+
     spawn_controller = Node(
         package="controller_manager",
         executable="spawner.py",

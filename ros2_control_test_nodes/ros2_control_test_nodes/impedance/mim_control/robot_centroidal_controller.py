@@ -89,7 +89,7 @@ class RobotCentroidalController:
                             Ib * mat(np.multiply(self.db, des_angvel - cur_angvel))
                     ).T
                 ),
-                ]
+            ]
         )
 
         # adding weight
@@ -97,7 +97,7 @@ class RobotCentroidalController:
 
         return w_com
 
-    def compute_force_qp(self, q, dq, cnt_array, w_com):
+    def compute_force_qp(self, q, dq, cnt_array, w_com, node=None):
         """Computes the forces needed to generated a desired centroidal wrench.
         Args:
             q: Generalized robot position configuration.
@@ -113,7 +113,23 @@ class RobotCentroidalController:
         robot = self.pin_robot_wrapper
         com = np.reshape(np.array(q[0:3]), (3,))
         robot.framesForwardKinematics(q)
+
+        # if node:
+        #     for name, oMf in zip(robot.model.names, robot.data.oMf):
+        #         node.get_logger().info(("frames-forward-kinematics: {:<24} : {: .2f} {: .2f} {: .2f}"
+        #                                 .format(name, *oMf.translation.T.flat)))
+
         r = [robot.data.oMf[i].translation - com for i in self.eff_ids]
+        node.get_logger().info(f'r={r}')
+        #
+        # joint_names = ["FL_HAA", "FL_HFE", "FL_KFE", "FR_HAA", "FR_HFE", "FR_KFE", "HL_HAA", "HL_HFE", "HL_KFE",
+        #                "HR_HAA", "HR_HFE", "HR_KFE"]
+        # pinocchio_joint_ids = np.array(
+        #     [robot.model.getJointId(name) for name in joint_names]
+        # )
+        # names_and_joint_ids = [(name, joint_id) for name, joint_id in zip(joint_names, pinocchio_joint_ids)]
+        # node.get_logger().info(f"joint names, pinocchio joint ids = {names_and_joint_ids}")
+
         nb_ee = self.robot_config.nb_ee
         # Use the contact activation from the plan to determine which of the
         # forces should be active.
@@ -135,8 +151,8 @@ class RobotCentroidalController:
             if cnt_array[i] == 0:
                 continue
 
-            A[:3, 3 * j : 3 * (j + 1)] = np.eye(3)
-            A[3:, 3 * j : 3 * (j + 1)] = pin.skew(r[i])
+            A[:3, 3 * j: 3 * (j + 1)] = np.eye(3)
+            A[3:, 3 * j: 3 * (j + 1)] = pin.skew(r[i])
 
             G[5 * j + 0, 3 * j + 0] = 1  # mu Fz - Fx >= 0
             G[5 * j + 0, 3 * j + 2] = -self.mu
@@ -159,9 +175,14 @@ class RobotCentroidalController:
         for i in range(len(cnt_array)):
             if cnt_array[i] == 0:
                 continue
-            F[3 * i : 3 * (i + 1)] = solx[3 * j : 3 * (j + 1)]
+            F[3 * i: 3 * (i + 1)] = solx[3 * j: 3 * (j + 1)]
             j += 1
 
+        fl = F[0:3]
+        fr = F[3:6]
+        hl = F[6:9]
+        hr = F[9:12]
+        # F = np.concatenate((fr, fl, hr, hl))
         return F
 
     #### quaternion stuff
