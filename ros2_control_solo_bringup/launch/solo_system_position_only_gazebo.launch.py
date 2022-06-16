@@ -8,7 +8,6 @@ from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
-    sdf_solo_path = PathJoinSubstitution([FindPackageShare("ros2_description_solo"), "urdf", "solo12_simulation.sdf"])
 
     declare_use_sim_time = (DeclareLaunchArgument(name='use_sim_time', default_value='True',
                                                   description='Flag to enable use_sim'))
@@ -51,13 +50,6 @@ def generate_launch_description():
         output="screen",
     )
 
-    # spawn_entity = Node(
-    #     package="gazebo_ros",
-    #     executable="spawn_entity.py",
-    #     arguments=["-entity", "solo", "-file", sdf_solo_path, "-x 0", "-y 0", "-z 0.5"],
-    #     output="screen",
-    # )
-
     spawn_controller = Node(
         package="controller_manager",
         executable="spawner.py",
@@ -73,15 +65,6 @@ def generate_launch_description():
         output="screen",
     )
 
-    robot_localization_node = Node(
-        package='robot_localization',
-        executable='ekf_node',
-        name='ekf_filter_node',
-        output='screen',
-        parameters=[PathJoinSubstitution([FindPackageShare("ros2_control_solo_bringup"), "config", "ekf.yaml"])
-            , {"use_sim_time": LaunchConfiguration("use_sim_time")}]
-    )
-
     return LaunchDescription(
         [
             declare_use_sim_time,
@@ -90,6 +73,5 @@ def generate_launch_description():
             spawn_entity,
             spawn_controller,
             spawn_controller_effort,
-            robot_localization_node
         ]
     )

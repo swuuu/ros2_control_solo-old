@@ -17,13 +17,13 @@ from glob import glob
 from setuptools import setup
 
 package_name = "ros2_control_test_nodes"
-effort_controller_submodule = f'{package_name}/effort_controller'
+PD_control_submodule = f'{package_name}/PD_control'
 impedance_controller_submodule = f'{package_name}/impedance'
 
 setup(
     name=package_name,
     version="0.0.1",
-    packages=[package_name, effort_controller_submodule, impedance_controller_submodule],
+    packages=[package_name, PD_control_submodule, impedance_controller_submodule],
     data_files=[
         ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
         ("share/" + package_name, ["package.xml"]),

@@ -16,5 +16,5 @@ class PDController:
 
     def compute_torques(self, m, h, q_dot_ref, q_dot_fbk, q_ref, q_fbk):
         q_ddot_target = self.d * (q_dot_ref - q_dot_fbk) + self.k * (q_ref - q_fbk)
-        return np.matmul(m, q_ddot_target) + h
-        # return q_ddot_target + h
+        tau = np.matmul(m, q_ddot_target) + h
+        return tau

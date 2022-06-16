@@ -14,8 +14,8 @@ class PinocchioHelperFunctions:
         q_list = np.array(list(q))
         pin.forwardKinematics(self.model, self.data, q_list)
         curr_foot = 0
-        for i in range(20):
-            print(self.model.names[i])
+        # for i in range(20):
+        #     print(self.model.names[i])
         print(self.model.names)
         print(self.data.oMi)
         for i, (name, oMi) in enumerate(zip(self.model.names, self.data.oMi)):
@@ -30,15 +30,19 @@ class PinocchioHelperFunctions:
 
     def get_mass_matrix(self, q, v):
         # pin.computeAllTerms(self.model, self.data, q, v)
-        M = pin.crba(self.model, self.data, q)
         # return self.data.M
+        M = pin.crba(self.model, self.data, q)
         return M
 
     def get_h(self, q, v):
         # pin.computeAllTerms(self.model, self.data, q, v)
-        h = pin.nonLinearEffects(self.model, self.data, q, v)
+        # h = pin.nonLinearEffects(self.model, self.data, q, v)
         # return self.data.nle
-        return h
+        aq0 = np.zeros(self.model.nv)
+        v = np.zeros(self.model.nv)
+        b = pin.rnea(self.model, self.data, q, v, aq0)
+        return b
+        # return h
 
     def get_jacobian(self):
         return pin.getJointJacobian(self.model, self.data, reference_frame=pin.ReferenceFrame.WORLD)

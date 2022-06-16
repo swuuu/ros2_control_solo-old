@@ -1,15 +1,12 @@
 cmake_minimum_required(VERSION 3.8)
 project(ros2_control_test_nodes)
 
-if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     add_compile_options(-Wall -Wextra -Wpedantic)
-endif()
+endif ()
 
 
 find_package(PkgConfig)        # find pkg_config
-pkg_search_module(Eigen3 REQUIRED eigen3)   # use pkg_config to find eigen3
-find_package(pinocchio REQUIRED)     # find pinocchio
-
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
@@ -19,10 +16,12 @@ find_package(control_msgs REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(gazebo_msgs REQUIRED)
+find_package(std_srvs REQUIRED)
+find_package(eiquadprog REQUIRED)
 find_package(pinocchio REQUIRED)
 find_package(Eigen3 REQUIRED)
-# find_package(eigen3_cmake_module REQUIRED)
-# find_package(Eigen3)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -33,14 +32,25 @@ include_directories(
         ${PINOCCHIO_INCLUDE_DIRS}
 )
 
+add_executable(test_controller_cpp
+        src/Node.cpp
+        src/Controllers.cpp
+        src/Algorithms/PD_control/PD_control.cpp
+        src/Algorithms/mim_control/centroidal_force_qp_controller.cpp
+        src/Algorithms/mim_control/centroidal_pd_controller.cpp
+        src/Algorithms/mim_control/impedance_controller.cpp
+        src/Algorithms/mim_control/demo_com_ctrl_cpp.cpp)
+ament_target_dependencies(test_controller_cpp rclcpp std_msgs sensor_msgs gazebo_msgs std_srvs eiquadprog)
+target_link_libraries(test_controller_cpp pinocchio::pinocchio /opt/openrobots/lib/libeiquadprog.so)
 
-add_executable(test_controller_cpp src/Node.cpp src/Controllers.cpp)
-ament_target_dependencies(test_controller_cpp rclcpp std_msgs)
+install(TARGETS
+        test_controller_cpp
+        DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY config
         DESTINATION share/${PROJECT_NAME})
 
-if(BUILD_TESTING)
+if (BUILD_TESTING)
     find_package(ament_lint_auto REQUIRED)
     # the following line skips the linter which checks for copyrights
     # uncomment the line when a copyright and license is not present in all source files
@@ -49,6 +59,6 @@ if(BUILD_TESTING)
     # uncomment the line when this package is not in a git repo
     #set(ament_cmake_cpplint_FOUND TRUE)
     ament_lint_auto_find_test_dependencies()
-endif()
+endif ()
 
 ament_package()

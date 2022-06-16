@@ -1,5 +1,3 @@
-import numpy as np
-
 
 def is_at_goal(pos_goal, pos_fbk):
     error = 0.001
@@ -7,13 +5,6 @@ def is_at_goal(pos_goal, pos_fbk):
         if not (pos_goal_el - error <= pos_fbk_el <= pos_goal_el + error):
             return False
     return True
-
-
-def is_HAA_symmetric(pos_fbk):
-    error = 0.001
-    return ((pos_fbk[0] - error <= -1 * pos_fbk[3] <= pos_fbk[0] + error) and (
-                pos_fbk[6] - error <= -1 * pos_fbk[9] <= pos_fbk[6] + error))
-
 
 class PotentialFieldPlanner:
 

@@ -2,16 +2,15 @@ from rclpy.node import Node
 from std_msgs.msg import Float64MultiArray
 from sensor_msgs.msg import JointState
 from gazebo_msgs.msg import LinkStates
-from tf_transformations import quaternion_matrix
 from std_srvs.srv import Trigger
 
 import numpy as np
 from enum import Enum
 
 # PD Controller imports
-from ros2_control_test_nodes.effort_controller.controllers import PDController
-from ros2_control_test_nodes.effort_controller.potential_field_planner import PotentialFieldPlanner
-from ros2_control_test_nodes.effort_controller.pinocchio_helper_functions import PinocchioHelperFunctions
+from ros2_control_test_nodes.PD_control.controllers import PDController
+from ros2_control_test_nodes.PD_control.potential_field_planner import PotentialFieldPlanner
+from ros2_control_test_nodes.PD_control.pinocchio_helper_functions import PinocchioHelperFunctions
 
 # Impedance Controller imports
 from ros2_control_test_nodes.impedance.mim_control.demo_robot_impedance import Demo as ImpedanceDemo
@@ -27,7 +26,7 @@ class RobotImpedanceController(Node):
         self.joint_effort = np.zeros(12)
         self.robot_pose = np.zeros(7)
         self.robot_twist = np.zeros(6)
-        self.k = 2  # k in potential field planner
+        self.k = 10  # k in potential field planner
         self.delta_t = 0.002  # also for the potential field planner
 
         # dictionary to re-order the numbers read from /joint_states
@@ -63,17 +62,18 @@ class RobotImpedanceController(Node):
         # Helper functions for the inverse dynamics controller
         self.pin_helper_funcs = PinocchioHelperFunctions(self.robot_description)
         self.potential_field_planner = PotentialFieldPlanner(self.k, self.delta_t, self.config_des)
-        self.PD_controller = PDController(1000000, 100)  # k = 20, d = 2
+        # self.PD_controller = PDController(1000000, 100)  # k = 20, d = 2
+        self.PD_controller = PDController(3000, 300) # try k = 500
 
         # States
         self.States = Enum("States", "STAND IMPEDANCE CENTROIDAL RESET_EFFORT")
         self.curr_state = self.States.RESET_EFFORT
 
-        # Service to start the PD controller
+        # Service to start the PD control
         self.srv_PD = self.create_service(Trigger, "trigger_PD", self.trigger_PD_callback)
-        # Service to start the impedance controller
+        # Service to start the impedance control
         self.srv_impedance = self.create_service(Trigger, "trigger_impedance", self.trigger_impedance_callback)
-        # Service to start the impedance controller
+        # Service to start the centroidal control
         self.srv_centroidal = self.create_service(Trigger, "trigger_centroidal", self.trigger_centroidal_callback)
         # Service to reset effort to 0
         self.srv_reset_effort = self.create_service(Trigger, "reset_effort", self.trigger_reset_effort_callback)
@@ -113,9 +113,6 @@ class RobotImpedanceController(Node):
         if self.curr_state == self.States.CENTROIDAL:
             msg = Float64MultiArray()
 
-            # self.joint_config = np.array([0.0, 0.8, -1.6, 0.0, 0.8, -1.6, 0.0, -0.8, 1.6, 0.0, -0.8, 1.6])
-            # self.joint_velocity = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
-
             joint_config_with_base = np.concatenate((self.robot_pose, self.joint_config))
             joint_vel_with_base = np.concatenate((self.robot_twist, self.joint_velocity))
             tau = self.centroidal_demo.compute_torques(joint_config_with_base, joint_vel_with_base, self)
@@ -125,10 +122,6 @@ class RobotImpedanceController(Node):
             self.get_logger().info(f'tau = {tau}')
             msg.data = tau.tolist()
             self.publisher_.publish(msg)
-
-            # pin_helper_func = self.pin_helper_funcs
-            # test = pin_helper_func.forward_kinematics(self.joint_config)
-            # self.get_logger().info(f'forward_kinematics={test}')
 
         if self.curr_state == self.States.RESET_EFFORT:
             msg = Float64MultiArray()
@@ -157,39 +150,13 @@ class RobotImpedanceController(Node):
         self.robot_pose[4] = msg.pose[1].orientation.y
         self.robot_pose[5] = msg.pose[1].orientation.z
         self.robot_pose[6] = msg.pose[1].orientation.w
-
         # Saving the twist
-        # Rotate twist to the body frame
-        # transform = quaternion_matrix([self.robot_pose[6], self.robot_pose[3], self.robot_pose[4], self.robot_pose[5]])
-        # rotation = transform[:3, :3]
-        # linear_vel = np.array([msg.twist[1].linear.x, msg.twist[1].linear.y, msg.twist[1].linear.z])
-        # angular_vel = np.array([msg.twist[1].angular.x, msg.twist[1].angular.y, msg.twist[1].angular.z])
-        # self.robot_twist[0:3] = np.matmul(rotation, linear_vel)
-        # self.robot_twist[3:6] = np.matmul(rotation, angular_vel)
-
-        # self.robot_pose = np.zeros(7)
-        # self.robot_twist = np.zeros(6)
-        # self.robot_pose[2] = msg.pose[1].position.z
-        # # self.robot_pose[2] = 0.2
-        # self.robot_pose[3] = msg.pose[1].orientation.x
-        # self.robot_pose[4] = msg.pose[1].orientation.y
-        # self.robot_pose[5] = msg.pose[1].orientation.z
-        # self.robot_pose[6] = msg.pose[1].orientation.w
-
         self.robot_twist[0] = msg.twist[1].linear.x
         self.robot_twist[1] = msg.twist[1].linear.y
         self.robot_twist[2] = msg.twist[1].linear.z
         self.robot_twist[3] = msg.twist[1].angular.x
         self.robot_twist[4] = msg.twist[1].angular.y
         self.robot_twist[5] = msg.twist[1].angular.z
-
-        # self.robot_pose[0] = 0.0001
-        # self.robot_pose[1] = 0.0001
-        # self.robot_pose[2] = 0.0001
-        # self.robot_pose[3] = 0.0001
-        # self.robot_pose[4] = 0.0001
-        # self.robot_pose[5] = 0.0001
-        # self.robot_pose[6] = 1.0
 
     def trigger_PD_callback(self, request, response):
         self.curr_state = self.States.STAND
