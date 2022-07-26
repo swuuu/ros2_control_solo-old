@@ -1,4 +1,4 @@
-# contains information about the frames between which impedance controllers must be created
+# contains information about the frames between which mim_control controllers must be created
 
 impedance_controllers:
   FL_imp:

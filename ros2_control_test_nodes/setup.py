@@ -18,12 +18,12 @@ from setuptools import setup
 
 package_name = "ros2_control_test_nodes"
 PD_control_submodule = f'{package_name}/PD_control'
-impedance_controller_submodule = f'{package_name}/impedance'
+mim_control_submodule = f'{package_name}/mim_control'
 
 setup(
     name=package_name,
     version="0.0.1",
-    packages=[package_name, PD_control_submodule, impedance_controller_submodule],
+    packages=[package_name, PD_control_submodule, mim_control_submodule],
     data_files=[
         ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
         ("share/" + package_name, ["package.xml"]),

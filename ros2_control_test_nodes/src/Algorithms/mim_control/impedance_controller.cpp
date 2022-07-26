@@ -181,4 +181,9 @@ namespace mim_control
         return end_frame_index_;
     }
 
+    const pinocchio::FrameIndex& ImpedanceController::get_rootframe_index()
+    {
+        return root_frame_index_;
+    }
+
 }  // namespace mim_control

@@ -17,12 +17,13 @@
 #include <vector>
 #include "ros2_control_test_nodes/PD_control/PD_control.hpp"
 #include "ros2_control_test_nodes/mim_control/demo_com_ctrl_cpp.hpp"
+#include "ros2_control_test_nodes/mim_control/demo_reactive_planners_solo12_step_adjustment.hpp"
 
 class Controllers : public rclcpp::Node {
 public:
     Controllers();
 
-    enum States {NO_EFFORT, STAND, CENTROIDAL};
+    enum States {NO_EFFORT, STAND, CENTROIDAL, WALK};
 
 private:
     // subscribers, publishers, and services
@@ -32,6 +33,7 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr srv_PD;
     rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr srv_centroidal;
+    rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr srv_reactive_planner;
 
     // topic callbacks
     void update_joint_states(const sensor_msgs::msg::JointState::SharedPtr msg);
@@ -40,7 +42,7 @@ private:
     void timer_callback();
 
     // fields
-
+    std::string robot_description;
     Eigen::VectorXd joint_config = Eigen::VectorXd::Zero(12);
     Eigen::VectorXd joint_velocity = Eigen::VectorXd::Zero(12);
     Eigen::VectorXd robot_pose = Eigen::VectorXd::Zero(7);
@@ -55,6 +57,9 @@ private:
     // Centroidal control
     DemoComCtrl demoComCtrl;
 
+    // Reactive planner
+    float control_time;
+    DemoReactivePlanner demoReactivePlanner;
 };
 
 #endif //ROS2_CONTROL_TEST_NODES_CONTROLLERS_HPP

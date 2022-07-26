@@ -1,7 +1,6 @@
 #include "ros2_control_test_nodes/mim_control/demo_com_ctrl_cpp.hpp"
 #include <pinocchio/algorithm/frames.hpp>
 #include <pinocchio/algorithm/center-of-mass.hpp>
-#include <vector>
 
 DemoComCtrl::DemoComCtrl() {}
 
@@ -17,7 +16,7 @@ DemoComCtrl::DemoComCtrl(std::string path_to_urdf) {
     db = {4, 4, 4};
     qp_penalty_weights = Eigen::VectorXd::Zero(6);
     qp_penalty_weights << 5e5, 5e5, 5e5, 1e6, 1e6, 1e6;
-    // create impedance controllers
+    // create mim_control controllers
     std::string root_name = "universe";
     endeff_names = {"FL_FOOT", "FR_FOOT", "HL_FOOT", "HR_FOOT"};
     imp_ctrls = {mim_control::ImpedanceController(),
@@ -48,9 +47,7 @@ DemoComCtrl::DemoComCtrl(std::string path_to_urdf) {
 
     // Impedance gains
     kp = Eigen::VectorXd::Zero(6);
-    // kp << 200.0, 200.0, 200.0, 0.0, 0.0, 0.0;
     kd = Eigen::VectorXd::Zero(6);
-    // kd << 10.0, 10.0, 10.0, 0.0, 0.0, 0.0;
 
     x_des = Eigen::VectorXd::Zero(12);
     x_des << 0.195, 0.147, 0.015, 0.195, -0.147, 0.015, -0.195, 0.147, 0.015, -0.195, -0.147, 0.015;
@@ -79,7 +76,6 @@ Eigen::VectorXd DemoComCtrl::compute_torques(Eigen::VectorXd &q, Eigen::VectorXd
 
     Eigen::VectorXd w_com = Eigen::VectorXd::Zero(6);
     w_com(2) = w_com(2) + 9.8 * 2.5;
-    std::cout << "centrl_pd_ctrl.get_wrench() = " << centrl_pd_ctrl.get_wrench() << std::endl;
     w_com = w_com + centrl_pd_ctrl.get_wrench();
     pinocchio::framesForwardKinematics(model, data, q);
 
@@ -110,7 +106,6 @@ Eigen::VectorXd DemoComCtrl::compute_torques(Eigen::VectorXd &q, Eigen::VectorXd
                 pinocchio::Motion(xd_des),
                 pinocchio::Force(ee_forces.segment(3 * i, 3), Eigen::Vector3d::Zero(3))
         );
-        std::cout << "impedance controls: " << imp_ctrls[i].get_joint_torques() << std::endl;
         tau = tau + imp_ctrls[i].get_joint_torques();
     }
     return tau;

@@ -45,11 +45,6 @@
             </material>
 
         </collision>
-        <!-- Bullet specific paramters -->
-<!--        <contact>-->
-<!--            <lateral_friction value="1.0"/>-->
-<!--            <restitution value="0.5"/>-->
-<!--        </contact>-->
     </link> <!-- END BASE LINK -->
 
     <!-- Include the crane if simulation -->

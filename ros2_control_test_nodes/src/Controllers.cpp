@@ -1,6 +1,3 @@
-//
-// Created by stanley on 6/6/22.
-//
 #include <chrono>
 #include "ros2_control_test_nodes/Controllers.hpp"
 
@@ -8,32 +5,47 @@ using std::placeholders::_1;
 using namespace std::chrono_literals;
 
 Controllers::States state = Controllers::NO_EFFORT;
+bool switch_to_walk = false;
 
 // service callbacks
 void PD_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
                  std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
     state = Controllers::STAND;
+    switch_to_walk = false;
     response->success = true;
 }
 
 void centroidal_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
                          std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
     state = Controllers::CENTROIDAL;
+    switch_to_walk = false;
     response->success = true;
 };
+
+//void trigger_reactive_planner_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+//                                       std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
+//    state = Controllers::WALK;
+//    response->success = true;
+//}
+
+void trigger_reactive_planner_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+                                       std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
+
+    state = Controllers::WALK;
+    switch_to_walk = true;
+    response->success = true;
+}
 
 Controllers::Controllers() : Node("test_controller_cpp") {
     // read parameters
     // robot URDF description
     this->declare_parameter<std::string>("path_to_urdf_file", "");
-    std::string robot_description;
     this->get_parameter("path_to_urdf_file", robot_description);
     // loop rate (= wait_sec_between_publish)
     this->declare_parameter<double>("wait_sec_between_publish", 5.0);
     double wait_sec_between_publish;
     this->get_parameter("wait_sec_between_publish", wait_sec_between_publish);
     // desired configuration
-    // std::vector<double>{}
     this->declare_parameter("config_desired");
     rclcpp::Parameter desired_config_rcl_param("config_desired", std::vector<double>({}));
     this->get_parameter("config_desired", desired_config_rcl_param);
@@ -60,8 +72,9 @@ Controllers::Controllers() : Node("test_controller_cpp") {
     // service to start the centroidal control
     srv_centroidal = this->create_service<std_srvs::srv::Trigger>("trigger_centroidal",
                                                                   &centroidal_callback);
+    srv_reactive_planner = this->create_service<std_srvs::srv::Trigger>("trigger_walk", &trigger_reactive_planner_callback);
 
-    // controls
+    // controlsresponse->success = true;
     // PD controller
     pdControl = PD_control(robot_description);
 
@@ -72,12 +85,24 @@ Controllers::Controllers() : Node("test_controller_cpp") {
     // COM controller
     demoComCtrl = DemoComCtrl(robot_description);
 
+    // Reactive planner
+    control_time = 0.0;
+    Eigen::VectorXd joint_config_with_base(robot_pose.size() + joint_config.size());
+    joint_config_with_base << robot_pose, joint_config;
+    demoReactivePlanner = DemoReactivePlanner(robot_description, joint_config_with_base);
+    // switch_to_walk = false;
+
     // timer
     timer_ = this->create_wall_timer(std::chrono::duration<double>(wait_sec_between_publish),
                                      std::bind(&Controllers::timer_callback, this));
 }
 
 void Controllers::timer_callback() {
+
+//    if (switch_to_walk) { // TODO: remove switch_to_walk
+//        return;
+//    }
+
     if (state == 1) { // state = STAND
         Eigen::MatrixXd m = pdControl.get_mass_matrix(joint_config, joint_velocity);
         Eigen::VectorXd h = pdControl.get_h(joint_config, joint_velocity);
@@ -86,9 +111,6 @@ void Controllers::timer_callback() {
         Eigen::VectorXd tau = pdControl.compute_torques(m, h, q_dot_ref, joint_velocity, q_ref, joint_config);
         auto msg = std_msgs::msg::Float64MultiArray();
         std::vector<double> tau_vector(tau.data(), tau.data() + tau.rows() * tau.cols());
-        for (double i: tau_vector)
-            std::cout << i << ',';
-        std::cout << std::endl;
         msg.data = tau_vector;
         publisher_->publish(msg);
     } else if (state == 2) { // state = CENTROIDAL
@@ -99,9 +121,17 @@ void Controllers::timer_callback() {
         Eigen::VectorXd tau = demoComCtrl.compute_torques(joint_config_with_base, joint_vel_with_base);
         auto msg = std_msgs::msg::Float64MultiArray();
         std::vector<double> tau_vector(tau.data(), tau.data() + tau.rows() * tau.cols());
-        for (double i: tau_vector)
-            std::cout << i << ',';
-        std::cout << std::endl;
+        msg.data = tau_vector;
+        publisher_->publish(msg);
+    } else if (state == 3) { // state = WALK
+        Eigen::VectorXd joint_config_with_base(robot_pose.size() + joint_config.size());
+        joint_config_with_base << robot_pose, joint_config;
+        Eigen::VectorXd joint_vel_with_base(robot_twist.size() + joint_velocity.size());
+        joint_vel_with_base << robot_twist, joint_velocity;
+        Eigen::VectorXd tau = demoReactivePlanner.compute_torques(joint_config_with_base, joint_vel_with_base, control_time);
+        control_time += 0.001;
+        auto msg = std_msgs::msg::Float64MultiArray();
+        std::vector<double> tau_vector(tau.data(), tau.data() + tau.rows() * tau.cols());
         msg.data = tau_vector;
         publisher_->publish(msg);
     }
