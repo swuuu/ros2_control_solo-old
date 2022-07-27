@@ -35,7 +35,7 @@ DemoReactivePlanner::DemoReactivePlanner(std::string path_to_urdf, Eigen::Vector
     qp_penalty_weights << qp_penalty_lin, qp_penalty_ang;
 
     centrl_pd_ctrl = mim_control::CentroidalPDController();
-    // values below obtained from printing the 2nd argument of centrl_pd_ctrl.initialize() in demo_robot_com_ctrl_cpp.py in mim_control repo
+    // values below obtained from printing the 2nd argument of centrl_pd_ctrl.initialize() in demo_robot_com_ctrl_cpp.py in mim_control_ repo
     Eigen::Vector3d inertia = {0.04196225, 0.0699186, 0.08607027};
     centrl_pd_ctrl.initialize(2.5, inertia);
     std::cout << "Here 1!" << std::endl;

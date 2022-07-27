@@ -12,6 +12,23 @@
     <!-- remove if using crane -->
     <link name="dummy"/>
 
+    <!-- Include the crane if simulation -->
+    <!--        <xacro:if value="$(arg use_sim)">-->
+    <!--            <xacro:include filename="$(find ros2_description_solo)/urdf/crane.urdf.xacro" />-->
+    <!--        </xacro:if>-->
+    <!--        <xacro:if value="$(arg use_sim)">-->
+    <!--            <xacro:crane parent="base_link" />-->
+    <!--        </xacro:if>-->
+
+    <!-- remove if using crane -->
+    <joint name="dummy_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <!--        <parent link="dummy"/>-->
+        <!--        <child link="base_link"/>-->
+        <parent link="base_link"/>
+        <child link="dummy"/>
+    </joint>
+
     <!-- This file is based on https://atlas.is.localnet/confluence/display/AMDW/Quadruped+URDF+Files -->
     <link name="base_link">
         <!-- BASE LINK INERTIAL -->
@@ -46,14 +63,6 @@
 
         </collision>
     </link> <!-- END BASE LINK -->
-
-    <!-- Include the crane if simulation -->
-<!--        <xacro:if value="$(arg use_sim)">-->
-<!--            <xacro:include filename="$(find ros2_description_solo)/urdf/crane.urdf.xacro" />-->
-<!--        </xacro:if>-->
-<!--        <xacro:if value="$(arg use_sim)">-->
-<!--            <xacro:crane parent="base_link" />-->
-<!--        </xacro:if>-->
 
     <!-- Include the legs -->
     <xacro:include filename="leg.xacro"/>
@@ -110,15 +119,6 @@
             use_sim="$(arg use_sim)"
     />
 
-    <!-- remove if using crane -->
-    <joint name="dummy_joint" type="fixed">
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-<!--        <parent link="dummy"/>-->
-<!--        <child link="base_link"/>-->
-                <parent link="base_link"/>
-                <child link="dummy"/>
-    </joint>
-
     <gazebo reference="base_link">
         <material>Gazebo/White</material>
 <!--        <selfCollide>true</selfCollide>-->
@@ -131,114 +131,5 @@
             </parameters>
         </plugin>
     </gazebo>
-
-    <!-- IMU Sensor -->
-<!--    <xacro:macro name="box_inertia" params="m w h d">-->
-<!--        <inertial>-->
-<!--            <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}"/>-->
-<!--            <mass value="${m}"/>-->
-<!--            <inertia ixx="${(m/12) * (h*h + d*d)}" ixy="0.0" ixz="0.0" iyy="${(m/12) * (w*w + d*d)}" iyz="0.0"-->
-<!--                     izz="${(m/12) * (w*w + h*h)}"/>-->
-<!--        </inertial>-->
-<!--    </xacro:macro>-->
-
-<!--    <link name="imu_link">-->
-<!--        <visual>-->
-<!--            <geometry>-->
-<!--                <box size="0.1 0.1 0.1"/>-->
-<!--            </geometry>-->
-<!--        </visual>-->
-<!--        <collision>-->
-<!--            <geometry>-->
-<!--                <box size="0.1 0.1 0.1"/>-->
-<!--            </geometry>-->
-<!--        </collision>-->
-<!--        <xacro:box_inertia m="0.1" w="0.1" d="0.1" h="0.1"/>-->
-<!--    </link>-->
-
-<!--    <joint name="imu_joint" type="fixed">-->
-<!--        <parent link="base_link"/>-->
-<!--        <child link="imu_link"/>-->
-<!--        <origin xyz="0 0 0.01"/>-->
-<!--    </joint>-->
-
-<!--    <gazebo reference="imu_link">-->
-<!--        <gravity>true</gravity>-->
-<!--        <sensor name="imu_sensor" type="imu">-->
-<!--            <always_on>true</always_on>-->
-<!--            <update_rate>100</update_rate>-->
-<!--            <visualize>true</visualize>-->
-<!--            <topic>__default_topic__</topic>-->
-<!--            <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">-->
-<!--                <ros>-->
-<!--                    <namespace>/demo</namespace>-->
-<!--                    <remapping>~/out:=imu</remapping>-->
-<!--                </ros>-->
-<!--                &lt;!&ndash;                <topicName>imu</topicName>&ndash;&gt;-->
-<!--                &lt;!&ndash;                <bodyName>imu_link</bodyName>&ndash;&gt;-->
-<!--                &lt;!&ndash;                <updateRateHZ>10.0</updateRateHZ>&ndash;&gt;-->
-<!--                &lt;!&ndash;                <gaussianNoise>0.0</gaussianNoise>&ndash;&gt;-->
-<!--                &lt;!&ndash;                <xyzOffset>0 0 0</xyzOffset>&ndash;&gt;-->
-<!--                &lt;!&ndash;                <rpyOffset>0 0 0</rpyOffset>&ndash;&gt;-->
-<!--                &lt;!&ndash;                <frameName>imu_link</frameName>&ndash;&gt;-->
-<!--                <initialOrientationAsReference>false</initialOrientationAsReference>-->
-<!--            </plugin>-->
-<!--            <imu>-->
-<!--                <angular_velocity>-->
-<!--                    <x>-->
-<!--                        <noise type="gaussian">-->
-<!--                            <mean>0.0</mean>-->
-<!--                            <stddev>2e-4</stddev>-->
-<!--                            <bias_mean>0.0000075</bias_mean>-->
-<!--                            <bias_stddev>0.0000008</bias_stddev>-->
-<!--                        </noise>-->
-<!--                    </x>-->
-<!--                    <y>-->
-<!--                        <noise type="gaussian">-->
-<!--                            <mean>0.0</mean>-->
-<!--                            <stddev>2e-4</stddev>-->
-<!--                            <bias_mean>0.0000075</bias_mean>-->
-<!--                            <bias_stddev>0.0000008</bias_stddev>-->
-<!--                        </noise>-->
-<!--                    </y>-->
-<!--                    <z>-->
-<!--                        <noise type="gaussian">-->
-<!--                            <mean>0.0</mean>-->
-<!--                            <stddev>2e-4</stddev>-->
-<!--                            <bias_mean>0.0000075</bias_mean>-->
-<!--                            <bias_stddev>0.0000008</bias_stddev>-->
-<!--                        </noise>-->
-<!--                    </z>-->
-<!--                </angular_velocity>-->
-<!--                <linear_acceleration>-->
-<!--                    <x>-->
-<!--                        <noise type="gaussian">-->
-<!--                            <mean>0.0</mean>-->
-<!--                            <stddev>1.7e-2</stddev>-->
-<!--                            <bias_mean>0.1</bias_mean>-->
-<!--                            <bias_stddev>0.001</bias_stddev>-->
-<!--                        </noise>-->
-<!--                    </x>-->
-<!--                    <y>-->
-<!--                        <noise type="gaussian">-->
-<!--                            <mean>0.0</mean>-->
-<!--                            <stddev>1.7e-2</stddev>-->
-<!--                            <bias_mean>0.1</bias_mean>-->
-<!--                            <bias_stddev>0.001</bias_stddev>-->
-<!--                        </noise>-->
-<!--                    </y>-->
-<!--                    <z>-->
-<!--                        <noise type="gaussian">-->
-<!--                            <mean>0.0</mean>-->
-<!--                            <stddev>1.7e-2</stddev>-->
-<!--                            <bias_mean>0.1</bias_mean>-->
-<!--                            <bias_stddev>0.001</bias_stddev>-->
-<!--                        </noise>-->
-<!--                    </z>-->
-<!--                </linear_acceleration>-->
-<!--            </imu>-->
-<!--            &lt;!&ndash;            <pose>0 0 0 0 0 0</pose>&ndash;&gt;-->
-<!--        </sensor>-->
-<!--    </gazebo>-->
 
 </robot>

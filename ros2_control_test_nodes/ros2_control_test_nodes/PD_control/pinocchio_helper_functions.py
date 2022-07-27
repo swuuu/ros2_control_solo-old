@@ -3,6 +3,9 @@ import numpy as np
 
 
 class PinocchioHelperFunctions:
+    """
+    Pinocchio functions used by the PD controller
+    """
 
     def __init__(self, urdf_model):
         # load the URDF model
@@ -14,35 +17,24 @@ class PinocchioHelperFunctions:
         q_list = np.array(list(q))
         pin.forwardKinematics(self.model, self.data, q_list)
         curr_foot = 0
-        # for i in range(20):
-        #     print(self.model.names[i])
         print(self.model.names)
         print(self.data.oMi)
         for i, (name, oMi) in enumerate(zip(self.model.names, self.data.oMi)):
             print(("{:<24} : {: .2f} {: .2f} {: .2f}"
                    .format(name, *oMi.translation.T.flat)))
-            # TODO: Verify if you get the correct positions of the joints
-            # TODO: Figure joint IDs of the 4 ankles
             if i % 5 == 0:
                 foot_positions[curr_foot] = oMi.translation.T.flat
                 curr_foot += 1
         return foot_positions
 
     def get_mass_matrix(self, q, v):
-        # pin.computeAllTerms(self.model, self.data, q, v)
-        # return self.data.M
         M = pin.crba(self.model, self.data, q)
         return M
 
     def get_h(self, q, v):
-        # pin.computeAllTerms(self.model, self.data, q, v)
-        # h = pin.nonLinearEffects(self.model, self.data, q, v)
-        # return self.data.nle
         aq0 = np.zeros(self.model.nv)
         v = np.zeros(self.model.nv)
-        b = pin.rnea(self.model, self.data, q, v, aq0)
-        return b
-        # return h
+        return pin.rnea(self.model, self.data, q, v, aq0)
 
     def get_jacobian(self):
         return pin.getJointJacobian(self.model, self.data, reference_frame=pin.ReferenceFrame.WORLD)
@@ -51,5 +43,3 @@ class PinocchioHelperFunctions:
         pin.computeJointJacobiansTimeVariation(self.model, self.data, q, v)
         return pin.getJointJacobianTimeVariation(self.model, self.data, id_ankle,
                                                  reference_frame=pin.ReferenceFrame.WORLD)
-
-    

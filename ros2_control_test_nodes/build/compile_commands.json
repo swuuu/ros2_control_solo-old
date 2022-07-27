@@ -1,0 +1,72 @@
+[
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/TestControllers.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/TestControllers.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/TestControllers.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Node.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Node.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Node.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/PD_control/PD_control.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/PD_control/PD_control.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/PD_control/PD_control.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/mim_control/centroidal_force_qp_controller.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/mim_control/centroidal_force_qp_controller.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/mim_control/centroidal_force_qp_controller.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/mim_control/centroidal_pd_controller.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/mim_control/centroidal_pd_controller.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/mim_control/centroidal_pd_controller.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/mim_control/impedance_controller.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/mim_control/impedance_controller.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/mim_control/impedance_controller.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/mim_control/demo_com_ctrl_cpp.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/mim_control/demo_com_ctrl_cpp.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/mim_control/demo_com_ctrl_cpp.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/mim_control/demo_reactive_planners_solo12_step_adjustment.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/mim_control/demo_reactive_planners_solo12_step_adjustment.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/mim_control/demo_reactive_planners_solo12_step_adjustment.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/reactive_planners/quadruped_dcm_reactive_stepper.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/quadruped_dcm_reactive_stepper.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/quadruped_dcm_reactive_stepper.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/reactive_planners/dcm_reactive_stepper.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/dcm_reactive_stepper.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/dcm_reactive_stepper.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/reactive_planners/dcm_vrp_planner.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/dcm_vrp_planner.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/dcm_vrp_planner.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/reactive_planners/dynamically_consistent_end_effector_trajectory.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/dynamically_consistent_end_effector_trajectory.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/dynamically_consistent_end_effector_trajectory.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/reactive_planners/polynomial_end_effector_trajectory.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/polynomial_end_effector_trajectory.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/polynomial_end_effector_trajectory.cpp"
+},
+{
+  "directory": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build",
+  "command": "/usr/bin/c++  -DBOOST_MPL_LIMIT_LIST_SIZE=30 -DBOOST_MPL_LIMIT_VECTOR_SIZE=30 -DDEFAULT_RMW_IMPLEMENTATION=rmw_fastrtps_cpp -DHPP_FCL_HAS_OCTOMAP -DHPP_FCL_HAVE_OCTOMAP -DOCTOMAP_MAJOR_VERSION=1 -DOCTOMAP_MINOR_VERSION=9 -DOCTOMAP_PATCH_VERSION=3 -DPINOCCHIO_WITH_HPP_FCL -DPINOCCHIO_WITH_URDFDOM -DRCUTILS_ENABLE_FAULT_INJECTION -DSPDLOG_COMPILED_LIB -I/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/include -isystem /opt/openrobots/include -isystem /opt/ros/foxy/include -isystem /usr/include/eigen3  -g   -Wall -Wextra -Wpedantic -o CMakeFiles/test_controller_cpp.dir/src/Algorithms/reactive_planners/stepper_head.cpp.o -c /home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/stepper_head.cpp",
+  "file": "/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/src/Algorithms/reactive_planners/stepper_head.cpp"
+}
+]

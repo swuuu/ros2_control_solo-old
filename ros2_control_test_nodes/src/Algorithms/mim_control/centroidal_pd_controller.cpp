@@ -87,4 +87,4 @@ namespace mim_control
         return wrench_;
     }
 
-}  // namespace mim_control
+}  // namespace mim_control_

@@ -404,17 +404,6 @@
 <!--            </contact>-->
         </link> <!-- END LOWER LEG LINK -->
 
-<!--        <transmission name="${prefix}_HAA_transmission">-->
-<!--            <type>transmission_interface/SimpleTransmission</type>-->
-<!--            <joint name="foo_joint">-->
-<!--                <hardwareInterface>EffortJointInterface</hardwareInterface>-->
-<!--            </joint>-->
-<!--            <actuator name="foo_motor">-->
-<!--                <mechanicalReduction>50</mechanicalReduction>-->
-<!--                <hardwareInterface>EffortJointInterface</hardwareInterface>-->
-<!--            </actuator>-->
-<!--        </transmission>-->
-
         <!-- Gazebo Parameters -->
         <gazebo reference="${prefix}_SHOULDER">
             <material>Gazebo/White</material>

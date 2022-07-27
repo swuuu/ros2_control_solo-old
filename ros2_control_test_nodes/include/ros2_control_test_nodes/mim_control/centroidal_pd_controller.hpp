@@ -83,4 +83,4 @@ namespace mim_control
                 ori_error_se3_;  // refer to christian ott paper for definitions (Rdb)
     };
 
-}  // namespace mim_control
+}  // namespace mim_control_

@@ -8,7 +8,7 @@
 #include "ros2_control_test_nodes/mim_control/impedance_controller.hpp"
 #include "ros2_control_test_nodes/mim_control/centroidal_pd_controller.hpp"
 #include "ros2_control_test_nodes/mim_control/centroidal_force_qp_controller.hpp"
-#include "ros2_control_test_nodes/mim_control/reactive_planners/quadruped_dcm_reactive_stepper.hpp"
+#include "ros2_control_test_nodes/reactive_planners/quadruped_dcm_reactive_stepper.hpp"
 
 class DemoReactivePlanner {
 public:

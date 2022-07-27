@@ -16,7 +16,7 @@ DemoComCtrl::DemoComCtrl(std::string path_to_urdf) {
     db = {4, 4, 4};
     qp_penalty_weights = Eigen::VectorXd::Zero(6);
     qp_penalty_weights << 5e5, 5e5, 5e5, 1e6, 1e6, 1e6;
-    // create mim_control controllers
+    // create mim_control_ controllers
     std::string root_name = "universe";
     endeff_names = {"FL_FOOT", "FR_FOOT", "HL_FOOT", "HR_FOOT"};
     imp_ctrls = {mim_control::ImpedanceController(),
@@ -31,7 +31,7 @@ DemoComCtrl::DemoComCtrl(std::string path_to_urdf) {
     Eigen::VectorXd q_init = Eigen::VectorXd::Zero(19);
     q_init[7] = 1;
     centrl_pd_ctrl = mim_control::CentroidalPDController();
-    // values below obtained from printing the 2nd argument of centrl_pd_ctrl.initialize() in demo_robot_com_ctrl_cpp.py in mim_control repo
+    // values below obtained from printing the 2nd argument of centrl_pd_ctrl.initialize() in demo_robot_com_ctrl_cpp.py in mim_control_ repo
     Eigen::Vector3d inertia = {0.04196225, 0.0699186, 0.08607027};
     centrl_pd_ctrl.initialize(2.5, inertia);
 
@@ -66,7 +66,7 @@ Eigen::VectorXd DemoComCtrl::compute_torques(Eigen::VectorXd &q, Eigen::VectorXd
             db,
             q.head(3),
             x_com,
-            dq.head(3), // assuming mim_control code had dq in local frame and this dq is in world frame so no conversion needed
+            dq.head(3), // assuming mim_control_ code had dq in local frame and this dq is in world frame so no conversion needed
             xd_com,
             q.segment(3, 4),
             x_ori,

@@ -1,0 +1,10 @@
+/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build/CMakeFiles/install/strip.dir
+/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build/CMakeFiles/install.dir
+/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build/CMakeFiles/list_install_components.dir
+/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build/CMakeFiles/rebuild_cache.dir
+/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build/CMakeFiles/edit_cache.dir
+/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build/CMakeFiles/test.dir
+/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build/CMakeFiles/test_controller_cpp.dir
+/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build/CMakeFiles/install/local.dir
+/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build/CMakeFiles/ros2_control_test_nodes_uninstall.dir
+/home/stanley/Documents/McGill/robotics/solo12/ros2_control_test_nodes/build/CMakeFiles/uninstall.dir

@@ -124,4 +124,4 @@ namespace mim_control
         return forces_;
     }
 
-}  // namespace mim_control
+}  // namespace mim_control_

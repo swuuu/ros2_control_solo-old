@@ -93,4 +93,4 @@ namespace mim_control
         eiquadprog::solvers::EiquadprogFast qp_;
     };
 
-}  // namespace mim_control
+}  // namespace mim_control_

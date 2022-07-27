@@ -34,28 +34,28 @@ include_directories(
         ${PINOCCHIO_INCLUDE_DIRS}
 )
 
-add_executable(test_controller_cpp
-        src/Node.cpp
-        src/Controllers.cpp
+add_executable(test_controllers_cpp
+        src/TestControllers.cpp
+        src/ControllersNode.cpp
         src/Algorithms/PD_control/PD_control.cpp
         src/Algorithms/mim_control/centroidal_force_qp_controller.cpp
         src/Algorithms/mim_control/centroidal_pd_controller.cpp
         src/Algorithms/mim_control/impedance_controller.cpp
         src/Algorithms/mim_control/demo_com_ctrl_cpp.cpp
         src/Algorithms/mim_control/demo_reactive_planners_solo12_step_adjustment.cpp
-        src/Algorithms/mim_control/reactive_planners/quadruped_dcm_reactive_stepper.cpp
-        src/Algorithms/mim_control/reactive_planners/dcm_reactive_stepper.cpp
-        src/Algorithms/mim_control/reactive_planners/dcm_vrp_planner.cpp
-        src/Algorithms/mim_control/reactive_planners/dynamically_consistent_end_effector_trajectory.cpp
-        src/Algorithms/mim_control/reactive_planners/polynomial_end_effector_trajectory.cpp
-        src/Algorithms/mim_control/reactive_planners/stepper_head.cpp
+        src/Algorithms/reactive_planners/quadruped_dcm_reactive_stepper.cpp
+        src/Algorithms/reactive_planners/dcm_reactive_stepper.cpp
+        src/Algorithms/reactive_planners/dcm_vrp_planner.cpp
+        src/Algorithms/reactive_planners/dynamically_consistent_end_effector_trajectory.cpp
+        src/Algorithms/reactive_planners/polynomial_end_effector_trajectory.cpp
+        src/Algorithms/reactive_planners/stepper_head.cpp
         )
-ament_target_dependencies(test_controller_cpp rclcpp std_msgs sensor_msgs gazebo_msgs std_srvs eiquadprog)
-target_link_libraries(test_controller_cpp pinocchio::pinocchio /opt/openrobots/lib/libeiquadprog.so)
-target_link_libraries(test_controller_cpp eigen-quadprog::eigen-quadprog)
+ament_target_dependencies(test_controllers_cpp rclcpp std_msgs sensor_msgs gazebo_msgs std_srvs eiquadprog)
+target_link_libraries(test_controllers_cpp pinocchio::pinocchio /opt/openrobots/lib/libeiquadprog.so)
+target_link_libraries(test_controllers_cpp eigen-quadprog::eigen-quadprog)
 
 install(TARGETS
-        test_controller_cpp
+        test_controllers_cpp
         DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY config

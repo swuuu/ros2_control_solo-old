@@ -19,13 +19,14 @@ from setuptools import setup
 package_name = "ros2_control_test_nodes"
 PD_control_submodule = f'{package_name}/PD_control'
 mim_control_submodule = f'{package_name}/mim_control'
+reactive_planners_submodule = f'{package_name}/reactive_planners'
+robot_properties_solo = f'{package_name}/robot_properties_solo'
 
 setup(
     name=package_name,
     version="0.0.1",
-    packages=[package_name, PD_control_submodule, mim_control_submodule],
+    packages=[package_name, PD_control_submodule, mim_control_submodule, reactive_planners_submodule, robot_properties_solo],
     data_files=[
-        ("share/ament_index/resource_index/packages", ["resource/" + package_name]),
         ("share/" + package_name, ["package.xml"]),
         ("share/" + package_name, glob("launch/*.launch.py")),
         ("share/" + package_name + "/configs", glob("configs/*.*")),
@@ -50,12 +51,8 @@ Demo nodes for showing and testing functionalities of the ros2_control framework
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
-            "publisher_forward_position_controller = \
-                ros2_control_test_nodes.publisher_forward_position_controller:main",
-            "publisher_joint_trajectory_controller = \
-                ros2_control_test_nodes.publisher_joint_trajectory_controller:main",
-            "test_effort_controller = \
-                ros2_control_test_nodes.test_effort_controller:main"
+            "test_controllers = \
+                ros2_control_test_nodes.test_controllers:main"
         ],
     },
 )

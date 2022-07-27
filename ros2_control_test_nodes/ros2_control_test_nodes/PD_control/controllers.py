@@ -1,13 +1,6 @@
 import numpy as np
 
 
-class InverseDynamicsController:
-
-    def __init__(self, k, d):
-        self.k = k
-        self.d = d
-
-
 class PDController:
 
     def __init__(self, k, d):
