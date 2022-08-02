@@ -177,14 +177,19 @@ class RobotControllers(Node):
             # start = self.get_clock().now().to_msg().nanosec
             msg = Float64MultiArray()
             pose_fp, twist_fp = base_frame_rel_footprint()
-            joint_config_with_base = np.concatenate((pose_fp, self.joint_config))
-            joint_vel_with_base = np.concatenate((twist_fp, self.joint_velocity))
+            # joint_config_with_base = np.concatenate((pose_fp, self.joint_config))
+            # joint_vel_with_base = np.concatenate((twist_fp, self.joint_velocity))
+            joint_config_with_base = np.concatenate((self.robot_pose, self.joint_config))
+            joint_vel_with_base = np.concatenate((self.robot_twist, self.joint_velocity))
             tau = self.reactive_planner_demo.compute_torques(joint_config_with_base, joint_vel_with_base, self.control_time, "forward") # last argument options: forward,
+            desired_feet_pos = self.reactive_planner_demo.get_desired_next_step_pos(joint_config_with_base)
+            # self.get_logger().info(f'desired next step feet pos = {desired_feet_pos}')
             msg.data = tau.tolist()
             self.publisher_.publish(msg)
             # end = self.get_clock().now().to_msg().nanosec
             # self.get_logger().info(f'total time = {end - start}')
             self.control_time += 0.001
+
 
         if self.curr_state == self.States.RESET_EFFORT:
             msg = Float64MultiArray()
@@ -193,20 +198,23 @@ class RobotControllers(Node):
 
         if self.curr_state == self.States.PLOT:
             # plot for 1 foot only
-            x_curr_local, x_des_local = self.reactive_planner_demo.get_pos_feet()
+            x_curr_local, x_des_local, feet_pos_des = self.reactive_planner_demo.get_pos_feet()
             time_step = np.arange(0, x_curr_local.shape[0] * 0.001, 0.001)
             fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(5, 2.7))
             ax1.plot(time_step, x_curr_local[:, 0], label="Current X")
             ax1.plot(time_step, x_des_local[:, 0], label="Desired X")
+            ax1.plot(time_step, feet_pos_des[:, 0], label="Next step X")
             ax2.plot(time_step, x_curr_local[:, 1], label="Current Y")
             ax2.plot(time_step, x_des_local[:, 1], label="Desired Y")
+            ax2.plot(time_step, feet_pos_des[:, 1], label="Next step Y")
             ax3.plot(time_step, x_curr_local[:, 2], label="Current Z")
             ax3.plot(time_step, x_des_local[:, 2], label="Desired Z")
+            ax3.plot(time_step, feet_pos_des[:, 2], label="Next step Z")
             ax1.legend()
             ax2.legend()
             ax3.legend()
+            self.curr_state = self.States.CENTROIDAL
             plt.show()
-
 
     def update_joint_states(self, msg):
         # get the correct order of joint configs/vel
@@ -281,7 +289,7 @@ class RobotControllers(Node):
         # create a reactive planner demo class
         self.curr_state = self.States.WALK
         self.control_time = 0
-        self.reactive_planner_demo = ReactivePlannerDemo(self.robot_description, self.path_to_meshes)
+        self.reactive_planner_demo = ReactivePlannerDemo(self.robot_description, self.path_to_meshes, self.robot_pose[2])
         self.reactive_planner_demo.quadruped_dcm_reactive_stepper_start()
         return response
 
