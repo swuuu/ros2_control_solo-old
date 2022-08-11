@@ -5,9 +5,9 @@ from .robot_impedance_controller import RobotImpedanceController
 
 class Demo:
 
-    def __init__(self, urdf_path, path_to_meshes):
+    def __init__(self):
         # Create a robot instance in the simulator
-        robot_config = Solo12Config(urdf_path, path_to_meshes)
+        robot_config = Solo12Config()
         robot = Solo12Robot()
 
         # Impedance controller gains

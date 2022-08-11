@@ -3,12 +3,17 @@ import pinocchio as se3
 from pinocchio.utils import zero
 from pinocchio.robot_wrapper import RobotWrapper
 import os
+from pathlib import Path
 
 
-class Solo12Config():
+class Solo12Config:
     pin_robot = None
 
-    def __init__(self, urdf_path, meshes_path):
+    def __init__(self):
+
+        urdf_path = os.path.join(Path(__file__).resolve().parents[3].absolute(), "ros2_description_solo", "urdf",
+                                 "solo12.urdf")
+        meshes_path = os.path.join(Path(__file__).resolve().parents[3].absolute(), "ros2_description_solo")
         Solo12Config.pin_robot = RobotWrapper.BuildFromURDF(urdf_path, meshes_path, se3.JointModelFreeFlyer())
         # Solo12Config.pin_robot = se3.buildModelFromUrdf(self.urdf_path)
         # The inertia of a single blmc_motor.

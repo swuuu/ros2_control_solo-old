@@ -19,7 +19,8 @@ from ros2_control_test_nodes.mim_control.demo_robot_impedance import Demo as Imp
 from ros2_control_test_nodes.mim_control.demo_robot_com_ctrl import Demo as CentroidalDemo
 
 # reactive planner import
-from ros2_control_test_nodes.reactive_planners.demo_reactive_planners_solo12_step_adjustment_walk import Demo as ReactivePlannerDemo
+from ros2_control_test_nodes.reactive_planners.demo_reactive_planners_solo12_step_adjustment_walk import \
+    Demo as ReactivePlannerDemo
 
 # TF2 for the base footprint frame
 from tf2_ros import TransformBroadcaster
@@ -28,6 +29,7 @@ from geometry_msgs.msg import TransformStamped
 from tf2_ros.transform_listener import TransformListener
 from tf2_ros.buffer import Buffer
 from ros2_control_test_nodes.robot_properties_solo.Solo12Config import Solo12Config
+
 
 class RobotControllers(Node):
 
@@ -47,15 +49,11 @@ class RobotControllers(Node):
                                    'HL_HAA': 6, 'HL_HFE': 7, 'HL_KFE': 8, 'HR_HAA': 9, 'HR_HFE': 10, 'HR_KFE': 11}
 
         # Declare all paramters
-        self.declare_parameter("path_to_urdf_file")
         self.declare_parameter("wait_sec_between_publish", 5)
-        self.declare_parameter("path_to_meshes")
         self.declare_parameter("config_desired", [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0])
 
         # Read all parameters
-        self.robot_description = self.get_parameter("path_to_urdf_file").value
         wait_sec_between_publish = self.get_parameter("wait_sec_between_publish").value
-        self.path_to_meshes = self.get_parameter("path_to_meshes").value
         self.config_des = np.array(self.get_parameter("config_desired").value)
 
         # Create joint state publisher, timer, and joint state subscriber
@@ -68,16 +66,21 @@ class RobotControllers(Node):
         self.link_states_subscriber = self.create_subscription(LinkStates, "/link_states", self.update_link_states, 10)
 
         # Robot Impedance Demo
-        self.impedance_demo = ImpedanceDemo(self.robot_description, self.path_to_meshes)
+        self.impedance_demo = ImpedanceDemo()
 
         # Robot Centroidal Demo
-        self.centroidal_demo = CentroidalDemo(self.robot_description, self.path_to_meshes)
+        self.centroidal_demo = CentroidalDemo()
 
         # Reactive Planner
-        self.reactive_planner_demo = ReactivePlannerDemo(self.robot_description, self.path_to_meshes)
+        self.reactive_planner_demo = ReactivePlannerDemo()
+        temp_q = np.array(
+            [0.0, 0.0, 0.2, 0.0, 0.0, 0.0, 1.0, 0.0, 0.96, -1.89, -0.02, 0.95, -1.89, 0.01, -0.96, 1.89, -0.02, -0.95,
+             1.88])
+        self.control_time = 0
+        self.reactive_planner_demo.initialize_quadruped_dcm_reactive_stepper(temp_q)
 
         # Helper functions for the inverse dynamics controller
-        self.pin_helper_funcs = PinocchioHelperFunctions(self.robot_description)
+        self.pin_helper_funcs = PinocchioHelperFunctions()
         self.potential_field_planner = PotentialFieldPlanner(self.k, self.delta_t, self.config_des)
         self.PD_controller = PDController(3000, 300)  # try k = 500
 
@@ -103,7 +106,7 @@ class RobotControllers(Node):
         self.br = TransformBroadcaster(self)  # transform broadcaster
         self.tf_buffer = Buffer()
         self.tf_listener = TransformListener(self.tf_buffer, self)
-        self.robot_config = Solo12Config(self.robot_description, self.path_to_meshes)
+        self.robot_config = Solo12Config()
 
     def timer_callback(self):
 
@@ -184,7 +187,9 @@ class RobotControllers(Node):
             # joint_vel_with_base = np.concatenate((twist_fp, self.joint_velocity))
             joint_config_with_base = np.concatenate((self.robot_pose, self.joint_config))
             joint_vel_with_base = np.concatenate((self.robot_twist, self.joint_velocity))
-            tau = self.reactive_planner_demo.compute_torques(joint_config_with_base, joint_vel_with_base, self.control_time, "forward") # last argument options: forward,
+            tau = self.reactive_planner_demo.compute_torques(joint_config_with_base, joint_vel_with_base,
+                                                             self.control_time,
+                                                             "forward")  # last argument options: forward, turn,
             desired_feet_pos = self.reactive_planner_demo.get_desired_next_step_pos(joint_config_with_base)
             # self.get_logger().info(f'desired next step feet pos = {desired_feet_pos}')
             msg.data = tau.tolist()
@@ -192,7 +197,6 @@ class RobotControllers(Node):
             # end = self.get_clock().now().to_msg().nanosec
             # self.get_logger().info(f'total time = {end - start}')
             self.control_time += 0.001
-
 
         if self.curr_state == self.States.RESET_EFFORT:
             msg = Float64MultiArray()
@@ -293,9 +297,6 @@ class RobotControllers(Node):
     def trigger_reactive_planner_callback(self, request, response):
         # create a reactive planner demo class
         self.curr_state = self.States.WALK
-        self.control_time = 0
-        joint_config_with_base = np.concatenate((self.robot_pose, self.joint_config))
-        self.reactive_planner_demo.initialize_quadruped_dcm_reactive_stepper(joint_config_with_base)
         self.reactive_planner_demo.quadruped_dcm_reactive_stepper_start()
         return response
 

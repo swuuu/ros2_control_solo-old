@@ -9,9 +9,9 @@ import pinocchio as pin
 from scipy.spatial.transform import Rotation
 
 
-class Demo():
+class Demo:
 
-    def __init__(self, robot_description, path_to_meshes):
+    def __init__(self):
         np.set_printoptions(suppress=True, precision=2)
         pin.switchToNumpyArray()
 
@@ -23,7 +23,7 @@ class Demo():
         # self.kd = 12 * [5.0]
         self.kp = np.array(12 * [100.0])
         self.kd = 12 * [5.0]
-        robot_config = Solo12Config(robot_description, path_to_meshes)
+        robot_config = Solo12Config()
         config_file = robot_config.ctrl_path
         self.solo_leg_ctrl = RobotImpedanceController(self.robot, config_file)
 
@@ -143,7 +143,7 @@ class Demo():
 
     def quadruped_dcm_reactive_stepper_start(self):
         self.quadruped_dcm_reactive_stepper.start()
-        
+
     def quadruped_dcm_reactive_stepper_stop(self):
         self.quadruped_dcm_reactive_stepper.stop()
 

@@ -1,5 +1,7 @@
 import pinocchio as pin
 import numpy as np
+import os
+from pathlib import Path
 
 
 class PinocchioHelperFunctions:
@@ -7,9 +9,11 @@ class PinocchioHelperFunctions:
     Pinocchio functions used by the PD controller
     """
 
-    def __init__(self, urdf_model):
+    def __init__(self):
         # load the URDF model
-        self.model = pin.buildModelFromUrdf(urdf_model)
+        urdf_path = os.path.join(Path(__file__).resolve().parents[3].absolute(), "ros2_description_solo", "urdf",
+                                 "solo12.urdf")
+        self.model = pin.buildModelFromUrdf(urdf_path)
         self.data = self.model.createData()
 
     def forward_kinematics(self, q):
