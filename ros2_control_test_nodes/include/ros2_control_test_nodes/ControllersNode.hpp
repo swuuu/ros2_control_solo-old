@@ -17,7 +17,7 @@
 #include <vector>
 #include "ros2_control_test_nodes/PD_control/PD_control.hpp"
 #include "ros2_control_test_nodes/mim_control/demo_com_ctrl_cpp.hpp"
-#include "ros2_control_test_nodes/mim_control/demo_reactive_planners_solo12_step_adjustment.hpp"
+#include "ros2_control_test_nodes/reactive_planners/demo_reactive_planners_solo12_step_adjustment.hpp"
 
 class ControllersNode : public rclcpp::Node {
 public:

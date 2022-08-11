@@ -5,30 +5,26 @@ using std::placeholders::_1;
 using namespace std::chrono_literals;
 
 ControllersNode::States state = ControllersNode::NO_EFFORT;
-bool switch_to_walk = false;
 
 // service callbacks
 void PD_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
                  std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
     state = ControllersNode::STAND;
-    switch_to_walk = false;
     response->success = true;
 }
 
 void centroidal_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
                          std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
     state = ControllersNode::CENTROIDAL;
-    switch_to_walk = false;
     response->success = true;
 };
 
-void trigger_reactive_planner_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
-                                       std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
-
-    state = ControllersNode::WALK;
-    switch_to_walk = true;
-    response->success = true;
-}
+//void trigger_reactive_planner_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+//                                       std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
+//
+//    state = ControllersNode::WALK;
+//    response->success = true;
+//}
 
 ControllersNode::ControllersNode() : Node("test_controllers_cpp") {
     // read parameters
@@ -64,14 +60,6 @@ ControllersNode::ControllersNode() : Node("test_controllers_cpp") {
     link_state_subscriber_ = this->create_subscription<gazebo_msgs::msg::LinkStates>("/link_states", 10, std::bind(
             &ControllersNode::update_body_state, this, _1));
 
-    // service to start the PD control
-    srv_PD = this->create_service<std_srvs::srv::Trigger>("trigger_PD", &PD_callback);
-    // service to start the centroidal control
-    srv_centroidal = this->create_service<std_srvs::srv::Trigger>("trigger_centroidal",
-                                                                  &centroidal_callback);
-    srv_reactive_planner = this->create_service<std_srvs::srv::Trigger>("trigger_walk", &trigger_reactive_planner_callback);
-
-
     // PD controller
     pdControl = PD_control(robot_description);
 
@@ -83,10 +71,29 @@ ControllersNode::ControllersNode() : Node("test_controllers_cpp") {
     demoComCtrl = DemoComCtrl(robot_description);
 
     // Reactive planner
-    control_time = 0.0;
-    Eigen::VectorXd joint_config_with_base(robot_pose.size() + joint_config.size());
-    joint_config_with_base << robot_pose, joint_config;
-    demoReactivePlanner = DemoReactivePlanner(robot_description, joint_config_with_base);
+    demoReactivePlanner = DemoReactivePlanner(robot_description);
+//    Eigen::VectorXd temp_q(19);
+//    temp_q << 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 1.0, 0.0, 0.8, -1.6, 0.0, 0.8, -1.6, 0.0, -0.8, 1.6, 0.0, -0.8, 1.6;
+//    demoReactivePlanner.initialize(temp_q);
+
+    // service to start the PD control
+    srv_PD = this->create_service<std_srvs::srv::Trigger>("trigger_PD", &PD_callback);
+    // service to start the centroidal control
+    srv_centroidal = this->create_service<std_srvs::srv::Trigger>("trigger_centroidal",
+                                                                  &centroidal_callback);
+    // service to start the reactive planner
+    auto trigger_reactive_planner_cb = [this]
+            (const std::shared_ptr<std_srvs::srv::Trigger::Request> request,
+             std::shared_ptr<std_srvs::srv::Trigger::Response> response) {
+        control_time = 0.0;
+        Eigen::VectorXd joint_config_with_base(robot_pose.size() + joint_config.size());
+        joint_config_with_base << robot_pose, joint_config;
+        demoReactivePlanner.initialize(joint_config_with_base);
+        demoReactivePlanner.quadruped_dcm_reactive_stepper_start();
+        state = ControllersNode::WALK;
+        response->success = true;
+    };
+    srv_reactive_planner = this->create_service<std_srvs::srv::Trigger>("trigger_walk", trigger_reactive_planner_cb);
 
     // timer
     timer_ = this->create_wall_timer(std::chrono::duration<double>(wait_sec_between_publish),
@@ -94,11 +101,6 @@ ControllersNode::ControllersNode() : Node("test_controllers_cpp") {
 }
 
 void ControllersNode::timer_callback() {
-
-//    if (switch_to_walk) { // TODO: remove switch_to_walk
-//        return;
-//    }
-
     if (state == 1) { // state = STAND
         Eigen::MatrixXd m = pdControl.get_mass_matrix(joint_config, joint_velocity);
         Eigen::VectorXd h = pdControl.get_h(joint_config, joint_velocity);
@@ -124,14 +126,15 @@ void ControllersNode::timer_callback() {
         joint_config_with_base << robot_pose, joint_config;
         Eigen::VectorXd joint_vel_with_base(robot_twist.size() + joint_velocity.size());
         joint_vel_with_base << robot_twist, joint_velocity;
-        Eigen::VectorXd tau = demoReactivePlanner.compute_torques(joint_config_with_base, joint_vel_with_base, control_time);
+        Eigen::VectorXd tau = demoReactivePlanner.compute_torques(joint_config_with_base, joint_vel_with_base,
+                                                                  control_time);
         control_time += 0.001;
+        // RCLCPP_INFO(this->get_logger(), "control time = %f", control_time);
         auto msg = std_msgs::msg::Float64MultiArray();
         std::vector<double> tau_vector(tau.data(), tau.data() + tau.rows() * tau.cols());
         msg.data = tau_vector;
         publisher_->publish(msg);
     }
-
 }
 
 void ControllersNode::update_joint_states(const sensor_msgs::msg::JointState::SharedPtr msg) {

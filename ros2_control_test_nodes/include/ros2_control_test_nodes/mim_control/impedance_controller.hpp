@@ -214,6 +214,9 @@ namespace mim_control
          * contains a free-flyer. This is used to return the command i.e. the
          * torques to be applied to the joints only. */
         bool pinocchio_model_has_free_flyer_;
+
+        // TODO: remove
+        int count;
     };
 
 }  // namespace mim_control_

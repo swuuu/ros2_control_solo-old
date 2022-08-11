@@ -13,9 +13,13 @@
 class DemoReactivePlanner {
 public:
     DemoReactivePlanner();
-    DemoReactivePlanner(std::string path_to_urdf, Eigen::VectorXd initial_q);
+    DemoReactivePlanner(std::string path_to_urdf);
+
+    void initialize(Eigen::VectorXd &q);
 
     Eigen::VectorXd compute_torques(Eigen::VectorXd &q, Eigen::VectorXd &dq, float control_time);
+
+    void quadruped_dcm_reactive_stepper_start();
 private:
 
     // pinocchio

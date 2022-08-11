@@ -177,7 +177,6 @@ bool QuadrupedDcmReactiveStepper::run(
     forces_.setZero();
     if (biped_stepper_.is_running())
     {
-        std::cout << "Running!" << std::endl;
         stepper_forces = biped_stepper_.get_force();
         if (biped_stepper_.get_is_left_leg_in_contact())
         {
@@ -194,7 +193,6 @@ bool QuadrupedDcmReactiveStepper::run(
     }
     else
     {
-        std::cout << "Not running!" << std::endl;
         contact_array_.fill(1.0);
     }
     return succeed;
@@ -231,5 +229,26 @@ bool QuadrupedDcmReactiveStepper::run(
                rpy(2),
                is_closed_loop);
 }
+
+const Eigen::Matrix<double, 4, 3> &QuadrupedDcmReactiveStepper::get_next_support_feet_positions(const double& base_yaw)
+    {
+        Eigen::Matrix3d base_yaw_rot =
+                pinocchio::rpy::rpyToMatrix(0.0, 0.0, base_yaw);
+        Eigen::Vector3d front_left_next_foot_position_ =
+                biped_stepper_.get_next_support_foot_position() + base_yaw_rot * fl_offset_;
+        Eigen::Vector3d hind_right_next_foot_position_ =
+                biped_stepper_.get_next_support_foot_position() + base_yaw_rot * hr_offset_;
+        Eigen::Vector3d front_right_next_foot_position_ =
+                biped_stepper_.get_next_support_foot_position() + base_yaw_rot * fr_offset_;
+        Eigen::Vector3d hind_left_next_foot_position_ =
+                biped_stepper_.get_next_support_foot_position() + base_yaw_rot * hl_offset_;
+
+        next_step_feet_pos.row(0) << front_left_next_foot_position_(0), front_left_next_foot_position_(1), front_left_next_foot_position_(2);
+        next_step_feet_pos.row(1) << front_right_next_foot_position_(0), front_right_next_foot_position_(1), front_right_next_foot_position_(2);
+        next_step_feet_pos.row(2) << hind_left_next_foot_position_(0), hind_left_next_foot_position_(1), hind_left_next_foot_position_(2);
+        next_step_feet_pos.row(3) << hind_right_next_foot_position_(0), hind_right_next_foot_position_(1), hind_right_next_foot_position_(2);
+
+        return next_step_feet_pos;
+    }
 
 }  // namespace reactive_planners

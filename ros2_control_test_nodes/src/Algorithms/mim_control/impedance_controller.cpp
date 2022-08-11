@@ -57,6 +57,9 @@ namespace mim_control
         // Intermediate variables.
         root_orientation_ = pinocchio::SE3::Identity();
         end_orientation_ = pinocchio::SE3::Identity();
+
+        // TODO: remove
+        count = 0;
     }
 
     void ImpedanceController::run(
@@ -115,6 +118,10 @@ namespace mim_control
 
         // Actual end frame placement in root frame.
         actual_end_frame_placement_ = root_placement_.actInv(end_placement_);
+//        if (count < 4) {
+//            std::cout << "test-x = " << end_placement_.translation() - root_placement_.translation() << std::endl;
+//            std::cout << "x = " << actual_end_frame_placement_ << std::endl;
+//        }
 
         // Placement error.
         err_se3_.head<3>() = root_orientation_.rotation() *
@@ -131,6 +138,10 @@ namespace mim_control
         // Velocity error.
         err_vel_ = end_orientation_.act(desired_end_frame_velocity -
                                         actual_end_frame_velocity_);
+        if (count < 4) {
+            std::cout << "x - x_des = " << err_se3_ << std::endl;
+            count++;
+        }
 
         // Compute the force to be applied to the environment.
         impedance_force_ = gain_proportional * err_se3_.array();

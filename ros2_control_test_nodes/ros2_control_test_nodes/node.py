@@ -73,6 +73,9 @@ class RobotControllers(Node):
         # Robot Centroidal Demo
         self.centroidal_demo = CentroidalDemo(self.robot_description, self.path_to_meshes)
 
+        # Reactive Planner
+        self.reactive_planner_demo = ReactivePlannerDemo(self.robot_description, self.path_to_meshes)
+
         # Helper functions for the inverse dynamics controller
         self.pin_helper_funcs = PinocchioHelperFunctions(self.robot_description)
         self.potential_field_planner = PotentialFieldPlanner(self.k, self.delta_t, self.config_des)
@@ -198,9 +201,9 @@ class RobotControllers(Node):
 
         if self.curr_state == self.States.PLOT:
             # plot for 1 foot only
-            x_curr_local, x_des_local, feet_pos_des = self.reactive_planner_demo.get_pos_feet()
+            x_curr_local, x_des_local, feet_pos_des, com_pos = self.reactive_planner_demo.get_pos_feet()
             time_step = np.arange(0, x_curr_local.shape[0] * 0.001, 0.001)
-            fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(5, 2.7))
+            fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(5, 2.7))
             ax1.plot(time_step, x_curr_local[:, 0], label="Current X")
             ax1.plot(time_step, x_des_local[:, 0], label="Desired X")
             ax1.plot(time_step, feet_pos_des[:, 0], label="Next step X")
@@ -210,11 +213,13 @@ class RobotControllers(Node):
             ax3.plot(time_step, x_curr_local[:, 2], label="Current Z")
             ax3.plot(time_step, x_des_local[:, 2], label="Desired Z")
             ax3.plot(time_step, feet_pos_des[:, 2], label="Next step Z")
+            ax4.plot(time_step, com_pos[:, 1], label="Current Y COM")
             ax1.legend()
             ax2.legend()
             ax3.legend()
-            self.curr_state = self.States.CENTROIDAL
+            ax4.legend()
             plt.show()
+            self.curr_state = self.States.CENTROIDAL
 
     def update_joint_states(self, msg):
         # get the correct order of joint configs/vel
@@ -289,7 +294,8 @@ class RobotControllers(Node):
         # create a reactive planner demo class
         self.curr_state = self.States.WALK
         self.control_time = 0
-        self.reactive_planner_demo = ReactivePlannerDemo(self.robot_description, self.path_to_meshes, self.robot_pose[2])
+        joint_config_with_base = np.concatenate((self.robot_pose, self.joint_config))
+        self.reactive_planner_demo.initialize_quadruped_dcm_reactive_stepper(joint_config_with_base)
         self.reactive_planner_demo.quadruped_dcm_reactive_stepper_start()
         return response
 

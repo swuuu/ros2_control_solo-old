@@ -4,25 +4,21 @@ from ros2_control_test_nodes.robot_properties_solo.Solo12Robot import Solo12Robo
 from ros2_control_test_nodes.mim_control.robot_centroidal_controller import RobotCentroidalController
 from ros2_control_test_nodes.mim_control.demo_robot_com_ctrl import RobotImpedanceController
 from .reactive_planners_cpp import QuadrupedDcmReactiveStepper
+# from ros2_control_test_nodes.reactive_planners.reactive_planners_cpp import QuadrupedDcmReactiveStepper
 import pinocchio as pin
 from scipy.spatial.transform import Rotation
 
 
 class Demo():
 
-    def __init__(self, robot_description, path_to_meshes, com_height):
+    def __init__(self, robot_description, path_to_meshes):
         np.set_printoptions(suppress=True, precision=2)
         pin.switchToNumpyArray()
-        self.data_collector = None
 
-        # Create a robot instance. This initializes the simulator as well.
+        # Create a robot instance.
         self.robot = Solo12Robot()
-        tau = np.zeros(12)
 
-        # obtained from https://github.com/machines-in-motion/reactive_planners/blob/master/demos/demo_reactive_planners_solo12_step_adjustment_walk.ipynb
-        q = np.array(
-            [0.0, 0.0, 0.25, 0.0, 0.0, 0.38, 0.92, 0.0, 0.8, -1.6, 0.0, 0.8, -1.6, 0.0, -0.8, 1.6, 0.0, -0.8, 1.6])
-        total_mass = sum([i.mass for i in self.robot.pin_robot.model.inertias[1:]])
+        # Initialize RobotImpedanceController
         # self.kp = np.array(12 * [50.0])
         # self.kd = 12 * [5.0]
         self.kp = np.array(12 * [100.0])
@@ -30,6 +26,8 @@ class Demo():
         robot_config = Solo12Config(robot_description, path_to_meshes)
         config_file = robot_config.ctrl_path
         self.solo_leg_ctrl = RobotImpedanceController(self.robot, config_file)
+
+        # Initialize RobotCentroidalController
         self.centr_controller = RobotCentroidalController(
             robot_config,
             mu=0.6,
@@ -50,32 +48,20 @@ class Demo():
         #     qp_penalty_lin=[1e6, 1e6, 1e6],
         #     qp_penalty_ang=[1e6, 1e6, 1e6],
         # )
-        is_left_leg_in_contact = True
-        l_min = -0.1
-        l_max = 0.1
-        w_min = -0.08
-        w_max = 0.2
-        t_min = 0.1
-        t_max = 1.0
-        # t_max = 10.0
-        l_p = 0.00  # Pelvis width
-        # com_height = 0.25 # TODO: read com_height from ROS
-        self.com_height = com_height
-        weight = [1, 1, 5, 1000, 1000, 100000, 100000, 100000, 100000]
-        mid_air_foot_height = 0.05
-        control_period = 0.001
-        planner_loop = 0.010
-        # init poses
-        self.robot.pin_robot.framesForwardKinematics(q)
-        base_pose = q[:7]
-        front_left_foot_position = self.robot.pin_robot.data.oMf[
-            self.solo_leg_ctrl.imp_ctrl_array[0].frame_end_idx].translation
-        front_right_foot_position = self.robot.pin_robot.data.oMf[
-            self.solo_leg_ctrl.imp_ctrl_array[1].frame_end_idx].translation
-        hind_left_foot_position = self.robot.pin_robot.data.oMf[
-            self.solo_leg_ctrl.imp_ctrl_array[2].frame_end_idx].translation
-        hind_right_foot_position = self.robot.pin_robot.data.oMf[
-            self.solo_leg_ctrl.imp_ctrl_array[3].frame_end_idx].translation
+
+        # Quadruped_dcm_reactive_stepper parameters
+        self.is_left_leg_in_contact = True
+        self.l_min = -0.1
+        self.l_max = 0.1
+        self.w_min = -0.08
+        self.w_max = 0.2
+        self.t_min = 0.1
+        self.t_max = 1.0
+        self.l_p = 0.00  # Pelvis width
+        self.weight = [1, 1, 5, 1000, 1000, 100000, 100000, 100000, 100000]
+        self.mid_air_foot_height = 0.05
+        self.control_period = 0.001
+        self.planner_loop = 0.010
 
         # TODO
         self.v_des = np.array([0.0, 0.0, 0.0])
@@ -84,33 +70,9 @@ class Demo():
         # self.y_des = 0.2  # Speed of the yaw angle
 
         self.quadruped_dcm_reactive_stepper = QuadrupedDcmReactiveStepper()
-        self.quadruped_dcm_reactive_stepper.initialize(
-            is_left_leg_in_contact,
-            l_min,
-            l_max,
-            w_min,
-            w_max,
-            t_min,
-            t_max,
-            l_p,
-            self.com_height,
-            weight,
-            mid_air_foot_height,
-            control_period,
-            planner_loop,
-            base_pose,
-            front_left_foot_position,
-            front_right_foot_position,
-            hind_left_foot_position,
-            hind_right_foot_position,
-        )
 
-        self.quadruped_dcm_reactive_stepper.set_desired_com_velocity(self.v_des)
-        self.quadruped_dcm_reactive_stepper.set_polynomial_end_effector_trajectory()
-
-        self.x_com = [[0.0], [0.0], [self.com_height]]
+        # More fields
         self.com_des = np.array([0.0, 0.0])
-        self.yaw_des = self.yaw(q)
         self.cnt_array = [1, 1]
         self.control_time = 0
         self.open_loop = True
@@ -121,6 +83,7 @@ class Demo():
         self.x_curr_local = None
         self.x_des_local = None
         self.feet_pos_des = None
+        self.com_pos = None
 
     def zero_cnt_gain(self, kp, cnt_array):
         gain = np.array(kp).copy()
@@ -134,10 +97,57 @@ class Demo():
             Rotation.from_quat([np.array(q)[3:7]]).as_euler("xyz", degrees=False)
         )[0, 2]
 
+    def initialize_quadruped_dcm_reactive_stepper(self, q):
+
+        # initalize fields depending on q
+        self.yaw_des = self.yaw(q)
+        self.com_height = q[2]
+        self.x_com = [[0.0], [0.0], [self.com_height]]
+
+        # init poses
+        self.robot.pin_robot.framesForwardKinematics(q)
+        base_pose = q[:7]
+        front_left_foot_position = self.robot.pin_robot.data.oMf[
+            self.solo_leg_ctrl.imp_ctrl_array[0].frame_end_idx].translation
+        front_right_foot_position = self.robot.pin_robot.data.oMf[
+            self.solo_leg_ctrl.imp_ctrl_array[1].frame_end_idx].translation
+        hind_left_foot_position = self.robot.pin_robot.data.oMf[
+            self.solo_leg_ctrl.imp_ctrl_array[2].frame_end_idx].translation
+        hind_right_foot_position = self.robot.pin_robot.data.oMf[
+            self.solo_leg_ctrl.imp_ctrl_array[3].frame_end_idx].translation
+
+        # initialize quadruped_dcm_reactive_stepper
+        self.quadruped_dcm_reactive_stepper.initialize(
+            self.is_left_leg_in_contact,
+            self.l_min,
+            self.l_max,
+            self.w_min,
+            self.w_max,
+            self.t_min,
+            self.t_max,
+            self.l_p,
+            self.com_height,
+            self.weight,
+            self.mid_air_foot_height,
+            self.control_period,
+            self.planner_loop,
+            base_pose,
+            front_left_foot_position,
+            front_right_foot_position,
+            hind_left_foot_position,
+            hind_right_foot_position,
+        )
+
+        self.quadruped_dcm_reactive_stepper.set_desired_com_velocity(self.v_des)
+        self.quadruped_dcm_reactive_stepper.set_polynomial_end_effector_trajectory()
+
     def quadruped_dcm_reactive_stepper_start(self):
         self.quadruped_dcm_reactive_stepper.start()
+        
+    def quadruped_dcm_reactive_stepper_stop(self):
+        self.quadruped_dcm_reactive_stepper.stop()
 
-    def compute_torques(self, q, qdot, control_time, action="", node=None):
+    def compute_torques(self, q, qdot, control_time, action=""):
         self.robot.pin_robot.com(q, qdot)
         self.robot.update_pinocchio(q, qdot)
         x_com = self.robot.pin_robot.com(q, qdot)[0]
@@ -147,7 +157,8 @@ class Demo():
             self.v_des[0] = 0.2
             # self.com_des += self.v_des[:2] * 0.001
             self.com_des[0] = q[0] + self.v_des[0] * 0.001
-            self.com_des[1] = q[1]
+            # self.com_des[1] = q[1]
+            self.com_des[1] = 0
             self.yaw_des = 0.0
         elif action == "left":
             self.v_des[1] = 0.5
@@ -160,9 +171,6 @@ class Demo():
         elif action == "turn":
             self.y_des = 0.1
             self.yaw_des = self.yaw(q)
-            if node:
-                node.get_logger().info(f'current yaw = {self.yaw_des}')
-            # print(f'yaw_des = {self.yaw_des}')
             self.yaw_des += self.y_des * 0.001
             # self.yaw_des = self.yaw_des + (self.y_des * 0.001)
 
@@ -208,14 +216,17 @@ class Demo():
         x_des_local.extend(self.quadruped_dcm_reactive_stepper.get_hind_right_foot_position())
 
         # for tracking the feet position
-        if self.x_curr_local is None:
-            self.x_curr_local = np.array([front_left_foot_position.copy()])
-            self.x_des_local = np.array([self.quadruped_dcm_reactive_stepper.get_front_left_foot_position().copy()])
-            self.feet_pos_des = np.array([self.get_desired_next_step_pos(q)[0].copy()])
-        elif self.x_des_local.shape[0] < 500:
-            self.x_curr_local = np.concatenate((self.x_curr_local, np.array([front_left_foot_position.copy()])))
-            self.x_des_local = np.concatenate((self.x_des_local, np.array([self.quadruped_dcm_reactive_stepper.get_front_left_foot_position().copy()])))
-            self.feet_pos_des = np.concatenate((self.feet_pos_des, np.array([self.get_desired_next_step_pos(q)[0].copy()])))
+        if control_time > 3:
+            if self.x_curr_local is None:
+                self.x_curr_local = np.array([front_left_foot_position.copy()])
+                self.x_des_local = np.array([self.quadruped_dcm_reactive_stepper.get_front_left_foot_position().copy()])
+                self.feet_pos_des = np.array([self.get_desired_next_step_pos(q)[0].copy()])
+                self.com_pos = np.array([[q[0], q[1], q[2]]])
+            elif self.x_des_local.shape[0] < 500:
+                self.x_curr_local = np.concatenate((self.x_curr_local, np.array([front_left_foot_position.copy()])))
+                self.x_des_local = np.concatenate((self.x_des_local, np.array([self.quadruped_dcm_reactive_stepper.get_front_left_foot_position().copy()])))
+                self.feet_pos_des = np.concatenate((self.feet_pos_des, np.array([self.get_desired_next_step_pos(q)[0].copy()])))
+                self.com_pos = np.concatenate((self.com_pos, np.array([[q[0], q[1], q[2]]])))
 
         cnt_array = self.quadruped_dcm_reactive_stepper.get_contact_array()
 
@@ -233,8 +244,6 @@ class Demo():
             pin.Quaternion(pin.rpy.rpyToMatrix(0., 0., self.yaw_des)).coeffs(),
             [0.0, 0.0, self.y_des], # angular velocity desired
         )
-        if node:
-            node.get_logger().info(f'w_com = {w_com}')
 
         F = self.centr_controller.compute_force_qp(q, qdot, cnt_array, w_com)
 
@@ -264,11 +273,21 @@ class Demo():
             F,
         )
 
+        # if control_time < 0.001:
+        #     print("########################################")
+        #     print(f'q = {q}')
+        #     print(f'qdot = {qdot}')
+        #     print(f'kp = {self.zero_cnt_gain(self.kp, cnt_array)}')
+        #     print(f'kd = {self.zero_cnt_gain(self.kd, cnt_array)}')
+        #     print(f'x_des_local = {x_des_local}')
+        #     print(f'des_vel = {des_vel}')
+        #     print(f'F= {F}')
+        #     print(f'tau = {tau}')
         return tau
 
     # for tracking the feet position
     def get_pos_feet(self):
-        return self.x_curr_local, self.x_des_local, self.feet_pos_des
+        return self.x_curr_local, self.x_des_local, self.feet_pos_des, self.com_pos
 
     def get_desired_next_step_pos(self, q):
         return self.quadruped_dcm_reactive_stepper.get_next_support_feet_positions(self.yaw(q))
