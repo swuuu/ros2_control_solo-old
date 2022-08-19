@@ -17,5 +17,8 @@
 
   <export>
     <build_type>ament_cmake</build_type>
+    <gazebo_ros gazebo_model_path="${prefix}/meshes/stl"/>
+    <gazebo_ros gazebo_media_path="${prefix}/meshes/stl"/>
+    <gazebo_ros gazebo_resource_path="${prefix}/../ros2_control_solo_bringup/config"/>
   </export>
 </package>

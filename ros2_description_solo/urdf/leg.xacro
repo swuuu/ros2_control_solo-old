@@ -396,12 +396,31 @@
                 <material name="${color_name}">
                     <color rgba="${color} ${opacity}"/>
                 </material>
+                <gazebo>
+                    <surface>
+                        <contact>
+                            <ode>
+                                <soft_cfm>0.0</soft_cfm>
+                                <soft_erp>0.2</soft_erp>
+                                <kp>100000.0</kp>
+                                <kd>1.0</kd>
+                                <max_vel>100.0</max_vel>
+                                <min_depth>0.001</min_depth>
+                            </ode>
+                        </contact>
+                        <bounce>
+                            <restitution_coefficient>0.0</restitution_coefficient>
+                            <threshold>100000.0</threshold>
+                        </bounce>
+                        <friction>
+                            <ode>
+                                <mu>0.7</mu>
+                                <mu2>0.7</mu2>
+                            </ode>
+                        </friction>
+                    </surface>
+                </gazebo>
             </collision>
-            <!-- Bullet specific paramters -->
-<!--            <contact>-->
-<!--                <lateral_friction value="1.0"/>-->
-<!--                <restitution value="0.5"/>-->
-<!--            </contact>-->
         </link> <!-- END LOWER LEG LINK -->
 
         <!-- Gazebo Parameters -->

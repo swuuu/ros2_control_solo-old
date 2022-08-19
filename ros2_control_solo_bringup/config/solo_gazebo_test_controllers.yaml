@@ -1,0 +1,25 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 1000  # Hz
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+     
+    effort_controllers:
+      type: effort_controllers/JointGroupEffortController
+
+effort_controllers:
+  ros__parameters:
+    joints:
+      - FL_HAA
+      - FL_HFE
+      - FL_KFE
+      - FR_HAA
+      - FR_HFE
+      - FR_KFE
+      - HL_HAA
+      - HL_HFE
+      - HL_KFE
+      - HR_HAA
+      - HR_HFE
+      - HR_KFE

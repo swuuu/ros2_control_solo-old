@@ -81,7 +81,7 @@ def generate_launch_description():
     #     output="screen",
     # )
 
-    # Using a SDF file
+    # # Using a SDF file
     spawn_entity = Node(
         package="gazebo_ros",
         executable="spawn_entity.py",
@@ -100,7 +100,6 @@ def generate_launch_description():
         package="controller_manager",
         executable="spawner.py",
         arguments=["effort_controllers"],
-        # arguments=["forward_position_controller"],
         output="screen",
     )
 

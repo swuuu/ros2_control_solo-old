@@ -1,3 +1,5 @@
+#include <filesystem>
+#include <iostream>
 #include <chrono>
 #include "ros2_control_test_nodes/ControllersNode.hpp"
 
@@ -27,11 +29,9 @@ void centroidal_callback(const std::shared_ptr<std_srvs::srv::Trigger::Request> 
 //}
 
 ControllersNode::ControllersNode() : Node("test_controllers_cpp") {
-    // read parameters
-    // robot URDF description
 
-    this->declare_parameter<std::string>("path_to_urdf_file", "");
-    this->get_parameter("path_to_urdf_file", robot_description);
+    // read parameters
+
     // loop rate (= wait_sec_between_publish)
     this->declare_parameter<double>("wait_sec_between_publish", 5.0);
     double wait_sec_between_publish;
@@ -41,6 +41,12 @@ ControllersNode::ControllersNode() : Node("test_controllers_cpp") {
     rclcpp::Parameter desired_config_rcl_param("config_desired", std::vector<double>({}));
     this->get_parameter("config_desired", desired_config_rcl_param);
     std::vector<double> desired_config_param = desired_config_rcl_param.as_double_array();
+
+    // get URDF path
+    char cwd[256];
+    getcwd(cwd, 256);
+    std::string cwd_string = cwd;
+    robot_description = cwd_string + "/src/solo12/ros2_description_solo/urdf/solo12.urdf";
 
     // convert vector to eigen
     desired_config = Eigen::VectorXd::Zero(12);

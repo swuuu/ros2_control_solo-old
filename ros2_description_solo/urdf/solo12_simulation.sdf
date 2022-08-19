@@ -18,7 +18,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/solo12/solo_12_base.stl</uri>
+            <uri>/solo12/solo_12_base.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -35,7 +35,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/solo12/solo_12_base.stl</uri>
+            <uri>/solo12/solo_12_base.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -85,7 +85,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/solo12/solo12_hip_fe_fl.stl</uri>
+            <uri>/solo12/solo12_hip_fe_fl.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -102,7 +102,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/solo12/solo12_hip_fe_fl.stl</uri>
+            <uri>/solo12/solo12_hip_fe_fl.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -152,7 +152,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_upper_leg_left_side.stl</uri>
+            <uri>/with_foot/solo_upper_leg_left_side.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -169,7 +169,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_upper_leg_left_side.stl</uri>
+            <uri>/with_foot/solo_upper_leg_left_side.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -217,7 +217,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_lower_leg_left_side.stl</uri>
+            <uri>/with_foot/solo_lower_leg_left_side.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -234,28 +234,28 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_foot.stl</uri>
+            <uri>/with_foot/solo_foot.stl</uri>
           </mesh>
         </geometry>
         <surface>
           <contact>
-                      <ode>
-                        <soft_cfm>0.0</soft_cfm>
-                        <soft_erp>0.2</soft_erp>
-                        <kp>100000.0</kp>
-                        <kd>1.0</kd>
-                        <max_vel>100.0</max_vel>
-                        <min_depth>0.001</min_depth>
-                      </ode>
-                    </contact>
-                    <bounce>
-                      <restitution_coefficient>0.0</restitution_coefficient>
-                      <threshold>100000.0</threshold>
-                    </bounce>
+            <ode>
+              <soft_cfm>0.0</soft_cfm>
+              <soft_erp>0.2</soft_erp>
+              <kp>100000.0</kp>
+              <kd>1.0</kd>
+              <max_vel>100.0</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+          <bounce>
+            <restitution_coefficient>0.0</restitution_coefficient>
+            <threshold>100000.0</threshold>
+          </bounce>
           <friction>
             <ode>
-              <mu>0.9</mu>
-              <mu2>0.9</mu2>
+              <mu>0.7</mu>
+              <mu2>0.7</mu2>
             </ode>
           </friction>
         </surface>
@@ -265,7 +265,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_lower_leg_left_side.stl</uri>
+            <uri>/with_foot/solo_lower_leg_left_side.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -280,7 +280,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_foot.stl</uri>
+            <uri>/with_foot/solo_foot.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -330,7 +330,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/solo12/solo12_hip_fe_fr.stl</uri>
+            <uri>/solo12/solo12_hip_fe_fr.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -347,7 +347,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/solo12/solo12_hip_fe_fr.stl</uri>
+            <uri>/solo12/solo12_hip_fe_fr.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -397,7 +397,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_upper_leg_right_side.stl</uri>
+            <uri>/with_foot/solo_upper_leg_right_side.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -414,7 +414,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_upper_leg_right_side.stl</uri>
+            <uri>/with_foot/solo_upper_leg_right_side.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -462,7 +462,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_lower_leg_right_side.stl</uri>
+            <uri>/with_foot/solo_lower_leg_right_side.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -479,28 +479,28 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_foot.stl</uri>
+            <uri>/with_foot/solo_foot.stl</uri>
           </mesh>
         </geometry>
         <surface>
           <contact>
-                      <ode>
-                        <soft_cfm>0.0</soft_cfm>
-                        <soft_erp>0.2</soft_erp>
-                        <kp>100000.0</kp>
-                        <kd>1.0</kd>
-                        <max_vel>100.0</max_vel>
-                        <min_depth>0.001</min_depth>
-                      </ode>
-                    </contact>
-                    <bounce>
-                      <restitution_coefficient>0.0</restitution_coefficient>
-                      <threshold>100000.0</threshold>
-                    </bounce>
+            <ode>
+              <soft_cfm>0.0</soft_cfm>
+              <soft_erp>0.2</soft_erp>
+              <kp>100000.0</kp>
+              <kd>1.0</kd>
+              <max_vel>100.0</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+          <bounce>
+            <restitution_coefficient>0.0</restitution_coefficient>
+            <threshold>100000.0</threshold>
+          </bounce>
           <friction>
             <ode>
-              <mu>0.9</mu>
-              <mu2>0.9</mu2>
+              <mu>0.7</mu>
+              <mu2>0.7</mu2>
             </ode>
           </friction>
         </surface>
@@ -510,7 +510,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_lower_leg_right_side.stl</uri>
+            <uri>/with_foot/solo_lower_leg_right_side.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -525,7 +525,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_foot.stl</uri>
+            <uri>/with_foot/solo_foot.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -575,7 +575,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/solo12/solo12_hip_fe_hl.stl</uri>
+            <uri>/solo12/solo12_hip_fe_hl.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -592,7 +592,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/solo12/solo12_hip_fe_hl.stl</uri>
+            <uri>/solo12/solo12_hip_fe_hl.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -642,7 +642,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_upper_leg_left_side.stl</uri>
+            <uri>/with_foot/solo_upper_leg_left_side.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -659,7 +659,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_upper_leg_left_side.stl</uri>
+            <uri>/with_foot/solo_upper_leg_left_side.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -707,7 +707,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_lower_leg_left_side.stl</uri>
+            <uri>/with_foot/solo_lower_leg_left_side.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -724,28 +724,28 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_foot.stl</uri>
+            <uri>/with_foot/solo_foot.stl</uri>
           </mesh>
         </geometry>
         <surface>
           <contact>
-                      <ode>
-                        <soft_cfm>0.0</soft_cfm>
-                        <soft_erp>0.2</soft_erp>
-                        <kp>100000.0</kp>
-                        <kd>1.0</kd>
-                        <max_vel>100.0</max_vel>
-                        <min_depth>0.001</min_depth>
-                      </ode>
-                    </contact>
-                    <bounce>
-                      <restitution_coefficient>0.0</restitution_coefficient>
-                      <threshold>100000.0</threshold>
-                    </bounce>
+            <ode>
+              <soft_cfm>0.0</soft_cfm>
+              <soft_erp>0.2</soft_erp>
+              <kp>100000.0</kp>
+              <kd>1.0</kd>
+              <max_vel>100.0</max_vel>
+              <min_depth>0.001</min_depth>
+            </ode>
+          </contact>
+          <bounce>
+            <restitution_coefficient>0.0</restitution_coefficient>
+            <threshold>100000.0</threshold>
+          </bounce>
           <friction>
             <ode>
-              <mu>0.9</mu>
-              <mu2>0.9</mu2>
+              <mu>0.7</mu>
+              <mu2>0.7</mu2>
             </ode>
           </friction>
         </surface>
@@ -755,7 +755,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_lower_leg_left_side.stl</uri>
+            <uri>/with_foot/solo_lower_leg_left_side.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -770,7 +770,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_foot.stl</uri>
+            <uri>/with_foot/solo_foot.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -820,7 +820,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/solo12/solo12_hip_fe_hr.stl</uri>
+            <uri>/solo12/solo12_hip_fe_hr.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -837,7 +837,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/solo12/solo12_hip_fe_hr.stl</uri>
+            <uri>/solo12/solo12_hip_fe_hr.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -887,7 +887,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_upper_leg_right_side.stl</uri>
+            <uri>/with_foot/solo_upper_leg_right_side.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -904,7 +904,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_upper_leg_right_side.stl</uri>
+            <uri>/with_foot/solo_upper_leg_right_side.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -952,7 +952,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_lower_leg_right_side.stl</uri>
+            <uri>/with_foot/solo_lower_leg_right_side.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -969,7 +969,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_foot.stl</uri>
+            <uri>/with_foot/solo_foot.stl</uri>
           </mesh>
         </geometry>
         <surface>
@@ -989,8 +989,8 @@
           </bounce>
           <friction>
             <ode>
-              <mu>0.9</mu>
-              <mu2>0.9</mu2>
+              <mu>0.7</mu>
+              <mu2>0.7</mu2>
             </ode>
           </friction>
         </surface>
@@ -1000,7 +1000,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_lower_leg_right_side.stl</uri>
+            <uri>/with_foot/solo_lower_leg_right_side.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -1015,7 +1015,7 @@
         <geometry>
           <mesh>
             <scale>1 1 1</scale>
-            <uri>file:///home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_description_solo/share/ros2_description_solo/meshes/stl/with_foot/solo_foot.stl</uri>
+            <uri>/with_foot/solo_foot.stl</uri>
           </mesh>
         </geometry>
         <material>
@@ -1028,7 +1028,7 @@
     </link>
     <static>0</static>
     <plugin name='gazebo_ros2_control' filename='libgazebo_ros2_control.so'>
-      <parameters>/home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_control_solo_bringup/share/ros2_control_solo_bringup/config/solo_gazebo_forward_controller_position.yaml</parameters>
+      <parameters>/home/stanley/Documents/McGill/robotics/foxy_ws/install/ros2_control_solo_bringup/share/ros2_control_solo_bringup/config/solo_gazebo_test_controllers.yaml</parameters>
     </plugin>
   </model>
 </sdf>

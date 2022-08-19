@@ -28,14 +28,6 @@
 
       <!-- HAA -->
       <joint name="FL_HAA">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-3.1415</param>-->
-<!--          <param name="max">3.1415</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -56,14 +48,6 @@
       </joint>
 
       <joint name="FR_HAA">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-3.1415</param>-->
-<!--          <param name="max">3.1415</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -84,14 +68,6 @@
       </joint>
 
       <joint name="HL_HAA">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-3.1415</param>-->
-<!--          <param name="max">3.1415</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -112,14 +88,6 @@
       </joint>
 
       <joint name="HR_HAA">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-3.1415</param>-->
-<!--          <param name="max">3.1415</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -141,14 +109,6 @@
 
       <!-- KFE -->
       <joint name="FL_KFE">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -169,14 +129,6 @@
       </joint>
 
       <joint name="FR_KFE">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -197,14 +149,6 @@
       </joint>
 
       <joint name="HL_KFE">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -225,14 +169,6 @@
       </joint>
 
       <joint name="HR_KFE">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -254,14 +190,6 @@
 
       <!-- HFE -->
       <joint name="FL_HFE">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -282,14 +210,6 @@
       </joint>
 
       <joint name="FR_HFE">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -310,14 +230,6 @@
       </joint>
 
       <joint name="HL_HFE">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -338,14 +250,6 @@
       </joint>
 
       <joint name="HR_HFE">
-<!--        <command_interface name="position">-->
-<!--          <param name="min">-3.1415</param>-->
-<!--          <param name="max">3.1415</param>-->
-<!--        </command_interface>-->
-<!--        <command_interface name="velocity">-->
-<!--          <param name="min">-100</param>-->
-<!--          <param name="max">100</param>-->
-<!--        </command_interface>-->
         <command_interface name="effort">
           <param name="min">-1000</param>
           <param name="max">1000</param>
@@ -385,146 +289,7 @@
         <!-- <param name="rotate_vector">1 2 3</param>
         <param name="orientation_vector">1 2 3 4</param> -->
       </sensor>
-
-
-
     </ros2_control>
-
-      <transmission name="FL_HAA_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="FL_HAA">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="FL_HAA_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="FR_HAA_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="FR_HAA">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="FR_HAA_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="HL_HAA_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="HL_HAA">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="HL_HAA_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="HR_HAA_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="HR_HAA">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="HR_HAA_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="FL_KFE_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="FL_KFE">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="FL_KFE_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="FR_KFE_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="FR_KFE">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="FR_KFE_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="HL_KFE_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="HL_KFE">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="HL_KFE_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="HR_KFE_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="HR_KFE">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="HR_KFE_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="FL_HFE_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="FL_HFE">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="FL_HFE_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="FR_HFE_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="FR_HFE">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="FR_HFE_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="HL_HFE_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="HL_HFE">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="HL_HFE_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-      <transmission name="HR_HFE_transmission">
-          <type>transmission_interface/SimpleTransmission</type>
-          <joint name="HR_HFE">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-          </joint>
-          <actuator name="HR_HFE_motor">
-              <hardwareInterface>EffortJointInterface</hardwareInterface>
-              <mechanicalReduction>9</mechanicalReduction>
-          </actuator>
-      </transmission>
-
-
-
   </xacro:macro>
-
 </robot>
 

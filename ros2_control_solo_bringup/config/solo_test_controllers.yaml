@@ -17,8 +17,6 @@ test_controllers:
       - HL_HFE
       - HR_HFE
 
-    path_to_urdf_file: "/home/stanley/Documents/McGill/robotics/solo12/ros2_description_solo/urdf/solo12.urdf"
-    path_to_meshes: "/home/stanley/Documents/McGill/robotics/solo12/ros2_description_solo"
 
 test_controllers_cpp:
   ros__parameters:
@@ -39,6 +37,3 @@ test_controllers_cpp:
       - FR_HFE
       - HL_HFE
       - HR_HFE
-
-    path_to_urdf_file: "/home/stanley/Documents/McGill/robotics/solo12/ros2_description_solo/urdf/solo12.urdf"
-    path_to_meshes: "/home/stanley/Documents/McGill/robotics/solo12/ros2_description_solo"

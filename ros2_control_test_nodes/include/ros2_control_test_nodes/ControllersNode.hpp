@@ -5,6 +5,7 @@
 #ifndef ROS2_CONTROL_TEST_NODES_CONTROLLERS_HPP
 #define ROS2_CONTROL_TEST_NODES_CONTROLLERS_HPP
 
+#include <filesystem>
 #include <chrono>
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
